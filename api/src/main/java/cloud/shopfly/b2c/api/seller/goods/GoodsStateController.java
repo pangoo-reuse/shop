@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
-* System Status Heartbeat function
+* 系统状态心跳功能
 * @Author shen
 * @Date 2021/6/30 15:49
 */
 
-@Api(description = "System Status Heartbeat function")
+@Api(tags = "系统状态心跳功能")
 @RestController
 @RequestMapping("/webjars/system/seller/state")
 @Validated

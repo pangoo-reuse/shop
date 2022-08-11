@@ -31,7 +31,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * Parameter group controller
+ * 参数组控制器
  * 
  * @author fk
  * @version v2.0
@@ -39,14 +39,14 @@ import javax.validation.constraints.NotEmpty;
  */
 @RestController
 @RequestMapping("/seller/goods/parameter-groups")
-@Api(description = "Parameter group correlationAPI")
+@Api(tags = "参数组相关API")
 @Validated
 public class ParameterGroupSellerController {
 
 	@Autowired
 	private ParameterGroupManager parameterGroupManager;
 
-	@ApiOperation(value = "Add parameter group", response = ParameterGroupDO.class)
+	@ApiOperation(value = "添加参数组", response = ParameterGroupDO.class)
 	@PostMapping
 	public ParameterGroupDO add(@Valid ParameterGroupDO parameterGroup) {
 
@@ -56,10 +56,10 @@ public class ParameterGroupSellerController {
 	}
 
 	@PutMapping(value = "/{id}")
-	@ApiOperation(value = "Modify parameter set", response = ParameterGroupDO.class)
+	@ApiOperation(value = "修改参数组", response = ParameterGroupDO.class)
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "A primary key", required = true, dataType = "int", paramType = "path"),
-			@ApiImplicitParam(name = "group_name", value = "Parameter group name", required = true, dataType = "string", paramType = "query")
+			@ApiImplicitParam(name = "group_name", value = "参数组名称", required = true, dataType = "string", paramType = "query")
 	})
 	public ParameterGroupDO edit(@NotEmpty(message = "The parameter group name cannot be empty") String groupName, @PathVariable Integer id) {
 
@@ -69,7 +69,7 @@ public class ParameterGroupSellerController {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	@ApiOperation(value = "Delete parameter set")
+	@ApiOperation(value = "删除参数组")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "Primary key of the parameter group to be deleted", required = true, dataType = "int", paramType = "path") })
 	public String delete(@PathVariable Integer id) {
@@ -80,7 +80,7 @@ public class ParameterGroupSellerController {
 	}
 
 	@GetMapping(value = "/{id}")
-	@ApiOperation(value = "Example Query a parameter group")
+	@ApiOperation(value = "查询一个参数组")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "Primary key of the parameter group to be queried", required = true, dataType = "int", paramType = "path") })
 	public ParameterGroupDO get(@PathVariable Integer id) {
@@ -90,10 +90,10 @@ public class ParameterGroupSellerController {
 		return parameterGroup;
 	}
 
-	@ApiOperation(value = "The parameter group moves up or down", notes = "This parameter is used when you move parameter groups up or down when binding parameters by category")
+	@ApiOperation(value = "参数组上移或者下移", notes = "分类绑定参数时，上移下移参数组时使用")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "group_id", value = "Parameter setid", required = true, paramType = "path", dataType = "int"),
-			@ApiImplicitParam(name = "sort_type", value = "Sort type, move upupMove down,down", required = true, paramType = "query", dataType = "String"), })
+			@ApiImplicitParam(name = "group_id", value = "参数组id", required = true, paramType = "path", dataType = "int"),
+			@ApiImplicitParam(name = "sort_type", value = "排序类型，上移 up，下移down", required = true, paramType = "query", dataType = "String"), })
 	@PutMapping(value = "/{group_id}/sort")
 	public String groupSort(@PathVariable("group_id") Integer groupId,
 			@ApiIgnore @SortType String sortType) {

@@ -35,7 +35,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * Merchandise classification controller
+ * 商品分类控制器
  *
  * @author fk
  * @version v2.0
@@ -43,7 +43,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seller/goods")
-@Api(description = "Commodity classification correlationAPI")
+@Api(tags = "商品分类API")
 public class CategorySellerController {
 
     @Autowired
@@ -57,10 +57,10 @@ public class CategorySellerController {
     @Autowired
     private ParameterGroupManager parameterGroupManager;
 
-    @ApiOperation(value = "Query the list of subcategories of a category")
+    @ApiOperation(value = "查询某分类下的子分类列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "parent_id", value = "The fatheridAnd the top of0", required = true, dataType = "int", paramType = "path"),
-            @ApiImplicitParam(name = "format", value = "Type if the value ispluginQuery the format data used by the plug-in", required = false, dataType = "string", paramType = "query"),})
+            @ApiImplicitParam(name = "parent_id", value = "父id，顶级为0", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "format", value = "类型，如果值是plugin则查询插件使用的格式数据", required = false, dataType = "string", paramType = "query"),})
     @GetMapping(value = "/categories/{parent_id}/children")
     public List list(@ApiIgnore @PathVariable("parent_id") Integer parentId, @ApiIgnore String format) {
 
@@ -69,9 +69,9 @@ public class CategorySellerController {
         return list;
     }
 
-    @ApiOperation(value = "Product release, get the current login user to choose the business category of all the parents")
+    @ApiOperation(value = "商品发布，获取当前登录用户选择经营类目的所有父")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "category_id", value = "CategoriesidAnd the top of0", required = true, dataType = "int", paramType = "path"),})
+            @ApiImplicitParam(name = "category_id", value = "分类id，顶级为0", required = true, dataType = "int", paramType = "path"),})
     @GetMapping(value = "/category/{category_id}/children")
     public List<CategoryDO> list(@ApiIgnore @PathVariable("category_id") Integer categoryId) {
         List<CategoryDO> list = this.categoryManager.getCategory(categoryId);
@@ -79,10 +79,10 @@ public class CategorySellerController {
     }
 
 
-    @ApiOperation(value = "Commodity publishing to get parameter information associated with selected categories")
+    @ApiOperation(value = "商品发布，获取所选分类关联的参数信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "category_id", value = "Categoriesid", required = true, dataType = "int", paramType = "path"),
-            @ApiImplicitParam(name = "goods_id", value = "productid", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "category_id", value = "分类id", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "goods_id", value = "商品id", required = true, dataType = "int", paramType = "path"),
     })
     @GetMapping(value = "/category/{category_id}/{goods_id}/params")
     public List<GoodsParamsGroupVO> queryParams(@PathVariable("category_id") Integer categoryId, @PathVariable("goods_id") Integer goodsId) {
@@ -92,9 +92,9 @@ public class CategorySellerController {
         return list;
     }
 
-    @ApiOperation(value = "Publish goods to get parameter information associated with the selected category")
+    @ApiOperation(value = "发布商品，获取所选分类关联的参数信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "category_id", value = "Categoriesid", required = true, dataType = "int", paramType = "path")
+            @ApiImplicitParam(name = "category_id", value = "分类id", required = true, dataType = "int", paramType = "path")
     })
     @GetMapping(value = "/category/{category_id}/params")
     public List<GoodsParamsGroupVO> queryParams(@PathVariable("category_id") Integer categoryId) {
@@ -104,9 +104,9 @@ public class CategorySellerController {
         return list;
     }
 
-    @ApiOperation(value = "Modify the product to get the brand information associated with the selected category")
+    @ApiOperation(value = "修改商品，获取所选分类关联的品牌信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "category_id", value = "Categoriesid", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "category_id", value = "分类id", required = true, dataType = "int", paramType = "path"),
     })
     @GetMapping(value = "/category/{category_id}/brands")
     public List<BrandDO> queryBrands(@PathVariable("category_id") Integer categoryId) {
@@ -116,7 +116,7 @@ public class CategorySellerController {
         return list;
     }
 
-    @ApiOperation(value = "Adding an item category", response = CategoryDO.class)
+    @ApiOperation(value = "添加商品分类", response = CategoryDO.class)
     @PostMapping("/categories")
     public CategoryDO add(@Valid CategoryDO category) {
 
@@ -126,7 +126,7 @@ public class CategorySellerController {
     }
 
     @PutMapping(value = "/categories/{id}")
-    @ApiOperation(value = "Modification of commodity classification", response = CategoryDO.class)
+    @ApiOperation(value = "修改商品分类", response = CategoryDO.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "A primary key", required = true, dataType = "int", paramType = "path")})
     public CategoryDO edit(@Valid CategoryDO category, @ApiIgnore @PathVariable Integer id) {
@@ -137,7 +137,7 @@ public class CategorySellerController {
     }
 
     @DeleteMapping(value = "/categories/{id}")
-    @ApiOperation(value = "Delete product Categories")
+    @ApiOperation(value = "删除商品分类")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "Primary key of the category of goods to be deleted", required = true, dataType = "int", paramType = "path")})
     public String delete(@PathVariable Integer id) {
@@ -148,7 +148,7 @@ public class CategorySellerController {
     }
 
     @GetMapping(value = "/categories/{id}")
-    @ApiOperation(value = "Query an item category")
+    @ApiOperation(value = "查询一个商品分类")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "Primary key of the category of goods to be queried", required = true, dataType = "int", paramType = "path")})
     public CategoryDO get(@PathVariable Integer id) {
@@ -158,7 +158,7 @@ public class CategorySellerController {
         return category;
     }
 
-    @ApiOperation(value = "Querying category Brands", notes = "Example Query the brand bound to a category,Includes unselected brands")
+    @ApiOperation(value = "查询分类品牌", notes = "查询某个分类绑定的品牌,包括未选中的品牌")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "category_id", value = "Categoriesid", required = true, dataType = "int", paramType = "path"),})
     @GetMapping(value = "/categories/{category_id}/brands")
@@ -169,18 +169,18 @@ public class CategorySellerController {
         return brands;
     }
 
-    @ApiOperation(value = "The administrator binds a brand to a category", notes = "The administrator binds a brand to a category使用")
+    @ApiOperation(value = "管理员操作分类绑定品牌", notes = "管理员操作分类绑定品牌使用")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "category_id", value = "Categoriesid", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "choose_brands", value = "brandidAn array of", required = true, paramType = "query", dataType = "int", allowMultiple = true)})
+            @ApiImplicitParam(name = "category_id", value = "分类id", required = true, paramType = "path", dataType = "int"),
+            @ApiImplicitParam(name = "choose_brands", value = "品牌id数组", required = true, paramType = "query", dataType = "int", allowMultiple = true)})
     @PutMapping(value = "/categories/{category_id}/brands")
     public List<CategoryBrandDO> saveBrand(@PathVariable("category_id") Integer categoryId, @ApiIgnore @RequestParam(value = "choose_brands",required = false) Integer[] chooseBrands) {
         return this.categoryManager.saveBrand(categoryId, chooseBrands);
     }
 
-    @ApiOperation(value = "Querying Category Specifications", notes = "Query all specifications, including category binding specifications,selectedfortrue")
+    @ApiOperation(value = "查询分类规格", notes = "查询所有规格，包括分类绑定的规格，selected为true")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "category_id", value = "Categoriesid", required = true, dataType = "int", paramType = "path"),})
+            @ApiImplicitParam(name = "category_id", value = "分类id", required = true, dataType = "int", paramType = "path"),})
     @GetMapping(value = "/categories/{category_id}/select-specs")
     public List<SelectVO> getCatSpecs(@PathVariable("category_id") Integer categoryId) {
 
@@ -189,19 +189,19 @@ public class CategorySellerController {
         return brands;
     }
 
-    @ApiOperation(value = "Bind specifications by category", notes = "Bind specifications by category使用")
+    @ApiOperation(value = "管理员操作分类绑定规格", notes = "管理员操作分类绑定规格使用")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "category_id", value = "Categoriesid", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "choose_specs", value = "specificationsidAn array of", required = true, paramType = "query", dataType = "int", allowMultiple = true),})
+            @ApiImplicitParam(name = "category_id", value = "分类id", required = true, paramType = "path", dataType = "int"),
+            @ApiImplicitParam(name = "choose_specs", value = "规格id数组", required = true, paramType = "query", dataType = "int", allowMultiple = true),})
     @PutMapping(value = "/categories/{category_id}/specs")
     public List<CategorySpecDO> saveSpec(@PathVariable("category_id") Integer categoryId, @ApiIgnore @RequestParam(value = "choose_specs",required = false) Integer[] chooseSpecs) {
 
         return this.categoryManager.saveSpec(categoryId, chooseSpecs);
     }
 
-    @ApiOperation(value = "Querying Category Parameters", notes = "Example Query binding parameters of a class, including parameter groups and parameters")
+    @ApiOperation(value = "查询分类参数", notes = "查询分类绑定的参数，包括参数组和参数")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "category_id", value = "Categoriesid", required = true, dataType = "int", paramType = "path"),})
+            @ApiImplicitParam(name = "category_id", value = "分类id", required = true, dataType = "int", paramType = "path"),})
     @GetMapping(value = "/categories/{category_id}/param")
     public List<ParameterGroupVO> getCatParam(@PathVariable("category_id") Integer categoryId) {
 

@@ -40,7 +40,7 @@ import javax.validation.constraints.NotNull;
 
 
 /**
- * Member controller
+ * 会员控制器
  *
  * @author zh
  * @version v2.0
@@ -49,7 +49,7 @@ import javax.validation.constraints.NotNull;
  */
 @RestController
 @RequestMapping("/members")
-@Api(description = "Members relatedAPI")
+@Api(tags = "会员相关API")
 public class MemberBuyerController {
 
     @Autowired
@@ -59,18 +59,18 @@ public class MemberBuyerController {
 
 
     @PutMapping
-    @ApiOperation(value = "Perfect member details", response = Member.class)
+    @ApiOperation(value = "完善会员细信息", response = Member.class)
     public Member perfectInfo(@Valid MemberEditDTO memberEditDTO) {
         Buyer buyer = UserContext.getBuyer();
         Member member = memberManager.getModel(buyer.getUid());
-        // Determine whether this member exists in the database
+        //判断数据库是否存在此会员
         if (member == null) {
             throw new ResourceNotFoundException("This member does not exist");
         }
         String str =EmojiCharacterUtil.encode(memberEditDTO.getNickname());
         memberEditDTO.setNickname(str);
         BeanUtil.copyProperties(memberEditDTO, member);
-        // Judge whether members are revising or perfecting their data
+        //判断会员是修改资料还是完善资料
         if (member.getInfoFull() != null && !member.getInfoFull().equals(1)) {
             member.setInfoFull(1);
             this.messageSender.send(new MqMessage(AmqpExchange.MEMBER_INFO_COMPLETE, "member-info-complete-routingkey", member.getMemberId()));
@@ -78,30 +78,30 @@ public class MemberBuyerController {
         member.setFace(memberEditDTO.getFace());
         member.setTel(memberEditDTO.getTel());
         this.memberManager.edit(member, buyer.getUid());
-        // Send membership information change messages
+        //发送会员资料变化消息
         this.messageSender.send(new MqMessage(AmqpExchange.MEMBER_INFO_CHANGE, AmqpExchange.MEMBER_INFO_CHANGE + "_ROUTING", member.getMemberId()));
         return member;
     }
 
 
     @GetMapping
-    @ApiOperation(value = "Query the current member information")
+    @ApiOperation(value = "查询当前会员信息")
     public Member get() {
         return this.memberManager.getModel(UserContext.getBuyer().getUid());
     }
 
-    @ApiOperation(value = "Log out member login")
+    @ApiOperation(value = "注销会员登录")
     @PostMapping(value = "/logout")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uid", value = "membersid", dataType = "int", paramType = "query", required = true)
+            @ApiImplicitParam(name = "uid", value = "会员id", dataType = "int", paramType = "query", required = true)
     })
-    public String loginOut(@NotNull(message = "membersidCant be empty") Integer uid) {
+    public String loginOut(@NotNull(message = "members id cant be empty") Integer uid) {
         this.memberManager.logout(uid);
         return null;
     }
 
     @GetMapping("/statistics")
-    @ApiOperation(value = "Collect some data about the current membership")
+    @ApiOperation(value = "统计当前会员的一些数据")
     public MemberStatisticsDTO getMemberStatistics() {
         return this.memberManager.getMemberStatistics();
     }

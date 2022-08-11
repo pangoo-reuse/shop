@@ -37,7 +37,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 /**
- * Flash sale relatedAPI
+ * 限时抢购相关API
  *
  * @author Snow create in 2018/7/23
  * @version v2.0
@@ -45,7 +45,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/promotions/seckill")
-@Api(description = "Flash sale relatedAPI")
+@Api(tags = "限时抢购相关API")
 @Validated
 public class SeckillBuyerController {
 
@@ -55,7 +55,7 @@ public class SeckillBuyerController {
     @Autowired
     private SeckillRangeManager seckillRangeManager;
 
-    @ApiOperation(value = "Read the seconds kill time")
+    @ApiOperation(value = "读取秒杀时刻")
     @ResponseBody
     @GetMapping(value = "/time-line")
     public List<TimeLineVO> readTimeLine() {
@@ -64,11 +64,11 @@ public class SeckillBuyerController {
     }
 
 
-    @ApiOperation(value = "Read the flash sale list according to the parameters")
+    @ApiOperation(value = "根据参数读取限时抢购的商品列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "range_time", value = "moment", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "page_no", value = "The page number", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "page_size", value = "A number of", dataType = "int", paramType = "query")
+            @ApiImplicitParam(name = "range_time", value = "时刻", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "page_no", value = "页码", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "page_size", value = "条数", dataType = "int", paramType = "query")
     })
     @GetMapping("/goods-list")
     public Page goodsList(@ApiIgnore Integer rangeTime, @ApiIgnore Integer pageSize, @ApiIgnore Integer pageNo) {

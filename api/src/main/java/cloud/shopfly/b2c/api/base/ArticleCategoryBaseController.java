@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
+ * 文章分类控制器
  * Article classification controller
  *
  * @author fk
@@ -37,16 +38,16 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @RestController
 @RequestMapping("/pages/article-categories")
-@Api(description = "Article classification correlationAPI")
+@Api(tags = "文章分类相关API")
 public class ArticleCategoryBaseController {
 
     @Autowired
     private ArticleCategoryManager articleCategoryManager;
 
 
-    @ApiOperation(value = "Inquire categories and the following articles", response = ArticleCategoryVO.class)
+    @ApiOperation(value = "查询分类及以下文章", response = ArticleCategoryVO.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "category_type", value = "Classification type：Help center, mall announcements, fixed location, mall promotions, others", required = true, dataType = "string", paramType = "query",allowableValues = "HELP,NOTICE,POSITION,PROMOTION,OTHER"),
+            @ApiImplicitParam(name = "category_type", value = "分类类型：帮助中心，商城公告，固定位置，商城促销，其他", required = true, dataType = "string", paramType = "query",allowableValues = "HELP,NOTICE,POSITION,PROMOTION,OTHER"),
     })
     @GetMapping
     public ArticleCategoryVO getArticle(@ApiIgnore String categoryType) {
@@ -55,3 +56,4 @@ public class ArticleCategoryBaseController {
     }
 
 }
+

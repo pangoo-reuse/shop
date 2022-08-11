@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 /**
- * Integralapi
+ * 积分设置api
  *
  * @author zh
  * @version v7.0
@@ -40,7 +40,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/seller/settings")
-@Api(description = "Integral")
+@Api(tags = "积分设置")
 @Validated
 public class PointSettingSellerController {
     @Autowired
@@ -48,7 +48,7 @@ public class PointSettingSellerController {
 
 
     @GetMapping(value = "/point")
-    @ApiOperation(value = "Get the integral setting", response = PointSetting.class)
+    @ApiOperation(value = "获取积分设置", response = PointSetting.class)
     public PointSetting getPointSetting() {
         String pointSettingJson = settingClient.get( SettingGroup.POINT);
         PointSetting pointSetting = JsonUtil.jsonToObject(pointSettingJson,PointSetting.class);
@@ -59,7 +59,7 @@ public class PointSettingSellerController {
     }
 
     @PutMapping(value = "/point")
-    @ApiOperation(value = "Modify the integral Settings", response = PointSetting.class)
+    @ApiOperation(value = "修改积分设置", response = PointSetting.class)
     public PointSetting editPointSetting(@Valid PointSetting pointSetting) {
         settingClient.save(SettingGroup.POINT, pointSetting);
         return pointSetting;

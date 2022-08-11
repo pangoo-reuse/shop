@@ -43,11 +43,11 @@ import java.io.ByteArrayOutputStream;
 /**
  * @author fk
  * @version v2.0
- * @Description: Order payment
+ * @Description: 订单支付
  * @date 2018/4/1616:44
  * @since v7.0.0
  */
-@Api(description = "Order paymentAPI")
+@Api(tags = "订单支付API")
 @RestController
 @RequestMapping("/order/pay")
 @Validated
@@ -62,7 +62,7 @@ public class WeixinPayBuyerController {
     private LoginWeChatManager loginWeChatManager;
 
     @ApiIgnore
-    @ApiOperation(value = "Display a wechat QR code")
+    @ApiOperation(value = "显示一个微信二维码")
     @GetMapping(value = "/weixin/qr/{pr}")
     public byte[] qr(@PathVariable(name = "pr") String pr) throws Exception {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -78,9 +78,9 @@ public class WeixinPayBuyerController {
     }
 
 
-    @ApiOperation(value = "Get the status of wechat scanning payment")
+    @ApiOperation(value = "获取微信扫描支付的状态")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "weixin_trade_sn", value = "Wechat prepaid order number", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "weixin_trade_sn", value = "微信预付订单号", required = true, dataType = "String", paramType = "path"),
     })
     @GetMapping("/weixin/status/{weixin_trade_sn}")
     public String payStatus(@PathVariable(name = "weixin_trade_sn") String weixinTradeSn) {

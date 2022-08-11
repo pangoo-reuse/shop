@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Commodity label controller
+ * 商品标签控制器
  *
  * @author fk
  * @version v2.0
@@ -42,17 +42,17 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/goods")
-@Api(description = "Label commodity correlationAPI")
+@Api(tags = "商品标签相关API")
 @Validated
 public class TagsBuyerController {
 
     @Autowired
     private TagsManager tagsManager;
 
-    @ApiOperation(value = "Example Query the list of labeled commodities", response = TagsDO.class)
+    @ApiOperation(value = "查询标签商品列表", response = TagsDO.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "mark", value = "hotsellingnewNew productrecommendrecommended", required = true, dataType = "string", paramType = "path"),
-            @ApiImplicitParam(name = "num", value = "The number of queries", required = true, dataType = "int", paramType = "query")
+            @ApiImplicitParam(name = "mark", value = "hot热卖 new新品 recommend推荐", required = true, dataType = "string", paramType = "path"),
+            @ApiImplicitParam(name = "num", value = "查询数量", required = true, dataType = "int", paramType = "query")
     })
     @GetMapping("/tags/{mark}/goods")
     public List<GoodsSelectLine> list(Integer num, @MarkType @PathVariable String mark) {

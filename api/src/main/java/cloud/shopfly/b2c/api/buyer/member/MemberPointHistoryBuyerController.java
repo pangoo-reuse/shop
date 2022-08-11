@@ -35,7 +35,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * Member points table controller
+ * 会员积分表控制器
  *
  * @author zh
  * @version v7.0.0
@@ -44,7 +44,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @RestController
 @RequestMapping("/members")
-@Api(description = "Member point correlationAPI")
+@Api(tags = "会员积分相关API")
 public class MemberPointHistoryBuyerController {
 
     @Autowired
@@ -53,10 +53,10 @@ public class MemberPointHistoryBuyerController {
     private MemberManager memberManager;
 
 
-    @ApiOperation(value = "Query membership points list", response = MemberPointHistory.class)
+    @ApiOperation(value = "查询会员积分列表", response = MemberPointHistory.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page_no", value = "The page number", required = true, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "page_size", value = "Display quantity per page", required = true, dataType = "int", paramType = "query")
+            @ApiImplicitParam(name = "page_no", value = "页码", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "page_size", value = "每页显示数量", required = true, dataType = "int", paramType = "query")
     })
     @GetMapping("/points")
     public Page list(@ApiIgnore @NotEmpty(message = "The page number cannot be blank") Integer pageNo, @ApiIgnore @NotEmpty(message = "The number of pages cannot be empty") Integer pageSize) {
@@ -65,7 +65,7 @@ public class MemberPointHistoryBuyerController {
     }
 
 
-    @ApiOperation(value = "Query current members points")
+    @ApiOperation(value = "查询当前会员的积分")
     @GetMapping("/points/current")
     public MemberPointVO getPoint() {
         return memberManager.getMemberPoint();

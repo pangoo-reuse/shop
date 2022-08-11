@@ -30,7 +30,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * Integral classification correlationAPI
+ * 积分分类相关API
  *
  * @author Snow create in 2018/7/24
  * @version v2.0
@@ -38,23 +38,23 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seller/promotion/exchange-cats")
-@Api(description = "Integral classification correlationAPI")
+@Api(tags = "积分分类相关API")
 @Validated
 public class ExchangeCatSellerController {
 
     @Autowired
     private ExchangeCatManager exchangeCatManager;
 
-    @ApiOperation(value = "Query the list of subcategories of a category")
+    @ApiOperation(value = "查询某分类下的子分类列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "parent_id", value = "The fatheridAnd the top of0", required = true, dataType = "int", paramType = "path")
+            @ApiImplicitParam(name = "parent_id", value = "父id，顶级为0", required = true, dataType = "int", paramType = "path")
     })
     @GetMapping(value = "/{parent_id}/children")
     public List list(@ApiIgnore @PathVariable("parent_id") Integer parentId) {
         return	this.exchangeCatManager.list(parentId);
     }
 
-    @ApiOperation(value	= "Add the points exchange category", response = ExchangeCat.class)
+    @ApiOperation(value	= "添加积分兑换分类", response = ExchangeCat.class)
     @PostMapping
     public ExchangeCat add(@Valid ExchangeCat exchangeCat)	{
 
@@ -64,7 +64,7 @@ public class ExchangeCatSellerController {
     }
 
     @PutMapping(value = "/{id}")
-    @ApiOperation(value	= "Modify the classification of points exchange", response = ExchangeCat.class)
+    @ApiOperation(value	= "修改积分兑换分类", response = ExchangeCat.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name	= "id",	value =	"A primary key",	required = true, dataType = "int",	paramType =	"path")
     })
@@ -77,7 +77,7 @@ public class ExchangeCatSellerController {
 
 
     @DeleteMapping(value = "/{id}")
-    @ApiOperation(value	= "Delete the points exchange category")
+    @ApiOperation(value	= "删除积分兑换分类")
     @ApiImplicitParams({
             @ApiImplicitParam(name	= "id",	value =	"The points to be deleted are converted into classified primary keys",	required = true, dataType = "int",	paramType =	"path")
     })
@@ -90,7 +90,7 @@ public class ExchangeCatSellerController {
 
 
     @GetMapping(value =	"/{id}")
-    @ApiOperation(value	= "Query a point redemption category")
+    @ApiOperation(value	= "查询一个积分兑换分类")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",	value = "The integral exchange classification primary key to query",	required = true, dataType = "int",	paramType = "path")
     })

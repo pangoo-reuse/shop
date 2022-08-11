@@ -42,7 +42,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * Member safety controller
+ * 会员安全控制器
  *
  * @author zh
  * @version v7.0
@@ -52,7 +52,7 @@ import javax.validation.constraints.NotEmpty;
 @RestController
 @RequestMapping("/members")
 @Validated
-@Api(description = "Member of the safetyAPI")
+@Api(tags = "会员安全API")
 public class MemberSecurityBuyerController {
 
     @Autowired
@@ -69,12 +69,12 @@ public class MemberSecurityBuyerController {
     private ShopflyConfig shopflyConfig;
 
     @PostMapping(value = "/security/send")
-    @ApiOperation(value = "Send the mobile phone verification code")
+    @ApiOperation(value = "发送手机验证验证码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuid", value = "uuidUnique identifier of the client", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "captcha", value = "Image verification code", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "uuid", value = "uuid客户端的唯一标识", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "captcha", value = "图片验证码", required = true, dataType = "String", paramType = "query")
     })
-    public String sendValSmsCode(@NotEmpty(message = "uuidCant be empty") String uuid, @NotEmpty(message = "图片验证码Cant be empty") String captcha) {
+    public String sendValSmsCode(@NotEmpty(message = "uuid cant be empty") String uuid, @NotEmpty(message = "img captcha cant be empty") String captcha) {
         boolean isPass = captchaClient.valid(uuid, captcha, SceneType.VALIDATE_MOBILE.name());
         if (!isPass) {
             throw new ServiceException(MemberErrorCode.E107.code(), "The image verification code is incorrect");
@@ -84,38 +84,38 @@ public class MemberSecurityBuyerController {
         if (member == null || StringUtil.isEmpty(member.getMobile())) {
             throw new ServiceException(MemberErrorCode.E114.code(), "Current member does not bind mobile phone number");
         }
-        // Clear image verification code information
+        // 清除图片验证码信息
         captchaClient.deleteCode(uuid, captcha, SceneType.VALIDATE_MOBILE.name());
         memberSecurityManager.sendValidateSmsCode(member.getMobile());
-        // Returns the validity time of the verification code for front-end warning
+        // 将验证码失效时间返回，用于前端提示
         return shopflyConfig.getSmscodeTimout() / 60 + "";
     }
 
 
     @PostMapping(value = "/security/bind/send/{mobile}")
-    @ApiOperation(value = "Send the verification code of the bound mobile phone")
+    @ApiOperation(value = "发送绑定手机验证码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuid", value = "uuidUnique identifier of the client", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "captcha", value = "Image verification code", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "mobile", value = "Mobile phone number", required = true, dataType = "String", paramType = "path")
+            @ApiImplicitParam(name = "uuid", value = "uuid客户端的唯一标识", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "captcha", value = "图片验证码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "mobile", value = "手机号码", required = true, dataType = "String", paramType = "path")
     })
-    public String sendBindSmsCode(@NotEmpty(message = "uuidCant be empty") String uuid, @NotEmpty(message = "图片验证码Cant be empty") String captcha, @PathVariable("mobile") String mobile) {
+    public String sendBindSmsCode(@NotEmpty(message = "uuid cant be empty") String uuid, @NotEmpty(message = "img captcha cant be empty") String captcha, @PathVariable("mobile") String mobile) {
         boolean isPass = captchaClient.valid(uuid, captcha, SceneType.BIND_MOBILE.name());
         if (!isPass) {
             throw new ServiceException(MemberErrorCode.E107.code(), "The image verification code is incorrect");
         }
-        // Clear the image verification code information
+        //清除除图片验证码信息
         captchaClient.deleteCode(uuid, captcha, SceneType.BIND_MOBILE.name());
-        // The bound mobile phone number is sent
+        //发送绑定手机号码
         memberSecurityManager.sendBindSmsCode(mobile);
         return null;
     }
 
     @PutMapping("/security/bind/{mobile}")
-    @ApiOperation(value = "Binding mobile Phone NumbersAPI")
+    @ApiOperation(value = "手机号码绑定API")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", value = "Mobile phone no.", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "sms_code", value = "Mobile verification code", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "mobile", value = "手机号", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "sms_code", value = "手机验证码", required = true, dataType = "String", paramType = "query"),
     })
     public String bindMobile(@PathVariable String mobile, @ApiIgnore @NotEmpty(message = "The SMS verification code cannot be empty") String smsCode) {
         boolean isPass = smsClient.valid(SceneType.BIND_MOBILE.name(), mobile, smsCode);
@@ -127,9 +127,9 @@ public class MemberSecurityBuyerController {
     }
 
     @GetMapping(value = "/security/exchange-bind")
-    @ApiOperation(value = "Authentication Indicates the binding verification code")
+    @ApiOperation(value = "验证换绑验证验证码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "sms_code", value = "captcha", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "sms_code", value = "验证码", required = true, dataType = "String", paramType = "query")
     })
     public String checkExchangeBindCode(@Valid @ApiIgnore @NotEmpty(message = "The verification code cannot be empty") String smsCode) {
         return this.valSmsCode(smsCode);
@@ -137,7 +137,7 @@ public class MemberSecurityBuyerController {
     }
 
     /**
-     * Verify the mobile phone verification code
+     * 验证手机验证码
      *
      * @param code captcha
      * @return
@@ -157,10 +157,10 @@ public class MemberSecurityBuyerController {
 
 
     @PutMapping("/security/exchange-bind/{mobile}")
-    @ApiOperation(value = "Change your cell phone numberAPI")
+    @ApiOperation(value = "手机号码换绑API")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", value = "Mobile phone no.", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "sms_code", value = "Mobile verification code", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "mobile", value = "手机号", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "sms_code", value = "手机验证码", required = true, dataType = "String", paramType = "query"),
     })
     public String exchangeBindMobile(@PathVariable String mobile, @ApiIgnore @NotEmpty(message = "The SMS verification code cannot be empty") String smsCode) {
         boolean isPass = smsClient.valid(SceneType.BIND_MOBILE.name(), mobile, smsCode);
@@ -172,7 +172,7 @@ public class MemberSecurityBuyerController {
     }
 
     @GetMapping(value = "/security/password")
-    @ApiOperation(value = "Verification Modifies the password verification code")
+    @ApiOperation(value = "验证修改密码验证码")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sms_code", value = "captcha", required = true, dataType = "String", paramType = "query")
     })
@@ -183,13 +183,13 @@ public class MemberSecurityBuyerController {
 
 
     @PutMapping(value = "/security/password")
-    @ApiOperation(value = "Change the password")
+    @ApiOperation(value = "修改密码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuid", value = "uuidUnique identifier of the client", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "captcha", value = "Image verification code", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "password", value = "Password", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "uuid", value = "uuid客户端的唯一标识", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "captcha", value = "图片验证码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query")
     })
-    public String updatePassword(@NotEmpty(message = "uuidCant be empty") String uuid, @NotEmpty(message = "图片验证码Cant be empty") String captcha, @NotEmpty(message = "密码Cant be empty") String password) {
+    public String updatePassword(@NotEmpty(message = "uuid cant be empty") String uuid, @NotEmpty(message = "img captcha cant be empty") String captcha, @NotEmpty(message = "密码Cant be empty") String password) {
         // Verification code
         boolean isPass = captchaClient.valid(uuid, captcha, SceneType.MODIFY_PASSWORD.name());
         if (!isPass) {

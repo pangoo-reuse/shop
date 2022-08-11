@@ -32,7 +32,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 /**
- * Promotion controller
+ * 促销活动控制器
  *
  * @author Snow create in 2018/7/10
  * @version v2.0
@@ -41,16 +41,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/promotions")
-@Api(description = "Promotion relatedAPI")
+@Api(tags = "促销活动API")
 @Validated
 public class PromotionBuyerController {
 
     @Autowired
     private PromotionGoodsManager promotionGoodsManager;
 
-    @ApiOperation(value = "Read all participating activities based on goods")
+    @ApiOperation(value = "根据商品读取参与的所有活动")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "goods_id", value = "productID", required = true, dataType = "int", paramType = "path")
+            @ApiImplicitParam(name = "goods_id", value = "商品ID", required = true, dataType = "int", paramType = "path")
     })
     @GetMapping("/{goods_id}")
     public List<PromotionVO> getGoods(@ApiIgnore @PathVariable("goods_id") Integer goodsId){

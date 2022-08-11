@@ -34,19 +34,19 @@ import java.util.Map;
 /**
  * @author fk
  * @version v2.0
- * @Description: Full text product search
+ * @Description: 商品全文检索
  * @date 2018/6/1915:55
  * @since v7.0.0
  */
 @RestController
 @RequestMapping("/goods/search")
-@Api(description = "Product retrieval correlationAPI")
+@Api(tags = "商品检索相关API")
 public class GoodsSearchBuyerController {
 
     @Autowired
     private GoodsSearchManager goodsSearchManager;
 
-    @ApiOperation(value = "Querying commodity list")
+    @ApiOperation(value = "查询商品列表")
     @GetMapping
     public Page searchGoods(@ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize, GoodsSearchDTO goodsSearch){
 
@@ -56,14 +56,14 @@ public class GoodsSearchBuyerController {
         return goodsSearchManager.search(goodsSearch);
     }
 
-    @ApiOperation(value = "Query item selectors")
+    @ApiOperation(value = "查询商品选择器")
     @GetMapping("/selector")
     public Map searchGoodsSelector(GoodsSearchDTO goodsSearch){
 
         return goodsSearchManager.getSelector(goodsSearch);
     }
 
-    @ApiOperation(value = "Query the quantity of a commodity participle")
+    @ApiOperation(value = "查询商品关键词对应数量")
     @ApiImplicitParam(name = "keyword", value = "Search keywords", required = true, dataType = "string", paramType = "query")
     @GetMapping("/words")
     public List<GoodsWords> searchGoodsWords(String keyword){
@@ -71,7 +71,7 @@ public class GoodsSearchBuyerController {
         return goodsSearchManager.getGoodsWords(keyword);
     }
 
-    @ApiOperation(value = "To obtain'Recommend to you'Products")
+    @ApiOperation(value = "获取'为你推荐'商品列表")
     @GetMapping("/recommend")
     public Page recommendGoodsList(@ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize){
         GoodsSearchDTO goodsSearch = new GoodsSearchDTO();

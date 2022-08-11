@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 /**
- * Generalapi
+ * 站点设置api
  *
  * @author zh
  * @version v7.0
@@ -40,7 +40,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/seller/settings")
-@Api(description = "General")
+@Api(tags = "站点设置")
 @Validated
 public class SiteSettingSellerController {
     @Autowired
@@ -48,7 +48,7 @@ public class SiteSettingSellerController {
 
 
     @GetMapping(value = "/site")
-    @ApiOperation(value = "Get site Settings", response = SiteSetting.class)
+    @ApiOperation(value = "获取站点设置", response = SiteSetting.class)
     public SiteSetting getSiteSetting() {
         String siteSettingJson = settingManager.get(SettingGroup.SITE);
 
@@ -60,7 +60,7 @@ public class SiteSettingSellerController {
     }
 
     @PutMapping(value = "/site")
-    @ApiOperation(value = "Modify site Settings", response = SiteSetting.class)
+    @ApiOperation(value = "修改站点设置", response = SiteSetting.class)
     public SiteSetting editSiteSetting(@Valid SiteSetting siteSetting) {
         settingManager.save(SettingGroup.SITE, siteSetting);
         return siteSetting;

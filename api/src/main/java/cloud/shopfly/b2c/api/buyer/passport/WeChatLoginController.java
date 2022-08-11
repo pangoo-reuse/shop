@@ -30,14 +30,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * Unified login on wechat
+ * 微信统一登陆
  *
  * @author cs
  * @version v1.0
  * @since v7.2.2
  * 2019-09-22
  */
-@Api(description = "Unified login on wechat")
+@Api(tags = "微信统一登陆")
 @RestController
 @RequestMapping("/wechat")
 @Validated
@@ -46,32 +46,32 @@ public class WeChatLoginController {
     @Autowired
     private LoginWeChatManager loginWeChatManager;
 
-    @ApiOperation(value = "Gets the authorization page address")
-    @ApiImplicitParam(name	= "redirectUri",	value =	"The redirect address is successfully authorized(Need to beurlEncodeThe whole encryption)",	required = true, dataType = "string",	paramType =	"query")
+    @ApiOperation(value = "获取授权页地址")
+    @ApiImplicitParam(name	= "redirectUri",	value =	"授权成功跳转地址(需要urlEncode整体加密)",	required = true, dataType = "string",	paramType =	"query")
     @GetMapping("/wap/getLoginUrl")
     public String getLoginUrl(@RequestParam("redirectUri") String  redirectUri, @RequestHeader("uuid") String uuid){
         return  loginWeChatManager.getLoginUrl(redirectUri, uuid);
     }
 
-    @ApiOperation(value = "Landing page")
+    @ApiOperation(value = "网页登陆")
     @GetMapping("/wap/login")
     public Map h5Login(String code,String uuid,@RequestParam("oldUuid") String oldUuid){
         return loginWeChatManager.wxWapLogin(code,uuid,oldUuid);
     }
 
-    @ApiOperation(value = "applanding")
+    @ApiOperation(value = "app登陆")
     @PostMapping("/app/login/{uuid}")
     public Map appLogin(@PathVariable String uuid, WeChatUserDTO weChatUserDTO){
         return loginWeChatManager.wxAppLogin(uuid,weChatUserDTO);
     }
 
-    @ApiOperation(value = "Applets login")
+    @ApiOperation(value = "小程序登陆")
     @PostMapping("/mini/login")
     public Map miniLogin(WeChatMiniLoginDTO weChatMiniLoginDTO){
         return loginWeChatManager.miniLogin(weChatMiniLoginDTO);
     }
 
-    @ApiOperation(value = "Small program binding mobile phone number")
+    @ApiOperation(value = "小程序绑定手机号")
     @PostMapping("/mini/bind/phone")
     public Map miniBindPhone( String encrypted,String iv){
         return loginWeChatManager.miniBindPhone(encrypted,iv);

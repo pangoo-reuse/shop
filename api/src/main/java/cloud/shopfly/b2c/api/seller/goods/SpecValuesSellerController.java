@@ -31,7 +31,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * Specification value controller
+ * 规格值控制器
  * 
  * @author fk
  * @version v2.0
@@ -39,26 +39,26 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seller/goods/specs/{spec_id}/values")
-@Api(description = "Specification value correlationAPI")
+@Api(tags = "规格(Specification)值相关API")
 @Validated
 public class SpecValuesSellerController {
 
 	@Autowired
 	private SpecValuesManager specValuesManager;
 
-	@ApiOperation(value = "Example Query the specification list", response = SpecValuesDO.class)
+	@ApiOperation(value = "查询规格值列表", response = SpecValuesDO.class)
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "spec_id", value = "specificationsid", required = true, dataType = "int", paramType = "path"), })
+			@ApiImplicitParam(name = "spec_id", value = "规格id", required = true, dataType = "int", paramType = "path"), })
 	@GetMapping
 	public List<SpecValuesDO> list(@PathVariable("spec_id") Integer specId) {
 
 		return this.specValuesManager.listBySpecId(specId, Permission.ADMIN);
 	}
 
-	@ApiOperation(value = "Add a specification value")
+	@ApiOperation(value = "添加某规格的规格值")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "spec_id", value = "specificationsid", required = true, dataType = "int", paramType = "path"),
-			@ApiImplicitParam(name = "value_list", value = "Set of specification values", required = false, dataType = "string", paramType = "query", allowMultiple = true), })
+			@ApiImplicitParam(name = "spec_id", value = "规格id", required = true, dataType = "int", paramType = "path"),
+			@ApiImplicitParam(name = "value_list", value = "规格值集合", required = false, dataType = "string", paramType = "query", allowMultiple = true), })
 	@PostMapping
 	public List<SpecValuesDO> saveSpecValue(@PathVariable("spec_id") Integer specId, @NotNull(message = "Add at least one specification value") @ApiIgnore @RequestParam(value = "value_list",required = false) String[] valueList) {
 

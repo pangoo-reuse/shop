@@ -35,7 +35,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Distributor controller
+ * 分销商控制器
  *
  * @author Chopper
  * @version v1.0
@@ -45,7 +45,7 @@ import java.util.List;
  */
 
 @RestController
-@Api(description = "distributorsapi")
+@Api(tags = "分销商api")
 @RequestMapping("/distribution")
 public class DistributionBuyerController {
 
@@ -55,7 +55,7 @@ public class DistributionBuyerController {
 
 
     @GetMapping(value = "/lower-list")
-    @ApiOperation("Acquisition of sub-distributors")
+    @ApiOperation("获取下级分销商")
     public List<DistributionVO> getLowerDistributorList() {
         Buyer buyer = UserContext.getBuyer();
         if (buyer == null) {
@@ -64,12 +64,12 @@ public class DistributionBuyerController {
         try {
             return this.distributionManager.getLowerDistributorTree(buyer.getUid());
         } catch (Exception e) {
-            logger.error("There was an error getting the sub-distributor list", e);
+            logger.error("获取下级的分销商列表出错", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }
 
-    @ApiOperation("Get people to refer me")
+    @ApiOperation("获取推荐我的人")
     @GetMapping(value = "/recommend-me")
     public SuccessMessage recommendMe() {
         Buyer buyer = UserContext.getBuyer();
@@ -78,13 +78,13 @@ public class DistributionBuyerController {
         }
         try {
             DistributionDO distributor = this.distributionManager.getDistributorByMemberId(buyer.getUid());
-            // Perform non-null checks on distributors
+            //对分销商做非空校验
             if (distributor == null) {
                 throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
             }
             return new SuccessMessage(this.distributionManager.getUpMember());
         } catch (Exception e) {
-            logger.error("There was an error getting the sub-distributor list", e);
+            logger.error("获取下级的分销商列表出错", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }

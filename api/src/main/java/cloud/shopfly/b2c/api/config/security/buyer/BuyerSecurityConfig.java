@@ -29,8 +29,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * Created by kingapex on 2018/3/12.
- * Buyer security configuration
+ * 买家安全配置
  *
  * @author kingapex
  * @version 1.0
@@ -63,16 +62,17 @@ public class BuyerSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                // Disable the session
+                //禁用session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
-                // Define a validation failure return format
+
+                //定义验权失败返回格式
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint).and()
                 .authorizeRequests()
                 .and()
                 .addFilterBefore(new TokenAuthenticationFilter(buyerAuthenticationService),
                         UsernamePasswordAuthenticationFilter.class);
-        // Filter the path of the Base API
+        //过滤掉base api 的路径
         http.authorizeRequests().antMatchers("/pages/**"
                 , "/captchas/**"
                 , "/uploaders/**/**"
@@ -82,24 +82,29 @@ public class BuyerSecurityConfig extends WebSecurityConfigurerAdapter {
                 , "/countries"
                 , "/countries/**"
                 , "/ueditor/**").permitAll();
-
-        // Filter out local images and media files
+        //过滤掉本地的图片及媒体文件
         //gif,jpg,png,jpeg,mp4,quicktime
         http.authorizeRequests().antMatchers("/images/**/*.jpeg","/images/**/*.jpg","/images/**/*.gif","/images/**/*.png","/images/**/*.mp4","/images/**/*.quicktime").anonymous();;
 
-        // Filter out Swaggers path
+        // 过滤掉swagger的路径
         http.authorizeRequests().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**").anonymous();
-        // Filter out apis that dont require buyer privileges
-        http.authorizeRequests().antMatchers("/debugger/**", "/jquery.min.js", "/order/pay/weixin/**", "/order/pay/callback/**", "/order/pay/query/**", "/pintuan/orders/**", "/pintuan/goods", "/pintuan/goods/**", "/goods/**", "/pages/**", "/focus-pictures/**",
-                "/shops/list", "/shops/{spring:[0-9]+}", "/shops/cats/{spring:[0-9]+}", "/shops/navigations/{spring:[0-9]+}", "/promotions/**", "/view",
-                "/shops/sildes/{spring:[0-9]+}", "/members/logout*", "/passport/**", "/trade/goods/**", "/order/pay/return/**",
-                "/isr/**",
-                "/members/asks/goods/{spring:[0-9]+}", "/members/comments/goods/{spring:[0-9]+}", "/members/comments/goods/{spring:[0-9]+}/count", "/distribution/su/**", "/passport/connect/pc/WECHAT/**",
-                "/passport/login-binder/pc/**", "/account-binder/**", "/wechat/**", "/qq/**", "/apple/**", "/alipay/**", "/order/pay/paypal/**").permitAll().and();
-        // Define access only if you have buyer permission
+        // 过滤掉不需要买家权限的api
+        http.authorizeRequests().antMatchers(
+                "/debugger/**", "/jquery.min.js", "/order/pay/weixin/**",
+                "/order/pay/callback/**", "/order/pay/query/**", "/pintuan/orders/**",
+                "/pintuan/goods", "/pintuan/goods/**", "/goods/**", "/pages/**", "/focus-pictures/**",
+                "/shops/list", "/shops/{spring:[0-9]+}", "/shops/cats/{spring:[0-9]+}",
+                "/shops/navigations/{spring:[0-9]+}", "/promotions/**", "/view",
+                "/shops/sildes/{spring:[0-9]+}", "/members/logout*", "/passport/**",
+                "/trade/goods/**", "/order/pay/return/**", "/isr/**",
+                "/members/asks/goods/{spring:[0-9]+}", "/members/comments/goods/{spring:[0-9]+}",
+                "/members/comments/goods/{spring:[0-9]+}/count", "/distribution/su/**", "/passport/connect/pc/WECHAT/**",
+                "/passport/login-binder/pc/**", "/account-binder/**", "/wechat/**", "/qq/**",
+                "/apple/**", "/alipay/**", "/order/pay/paypal/**").permitAll().and();
+        //定义有买家权限才可以访问
         http.authorizeRequests().anyRequest().hasRole(Role.BUYER.name());
         http.headers().addHeaderWriter(xFrameOptionsHeaderWriter());
-        // Disable caching
+        //禁用缓存
         http.headers().cacheControl().and().contentSecurityPolicy("script-src 'self'");
 
     }

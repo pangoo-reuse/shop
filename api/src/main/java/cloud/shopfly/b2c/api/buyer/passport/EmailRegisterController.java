@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * register by email controller
+ * 邮箱注册
  * @author kingapex
  * @version 1.0
  * @data 2022/4/18 15:00
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/passport")
-@Api(description = "register by email api")
+@Api(tags = "邮箱注册")
 @Validated
 public class EmailRegisterController {
 
@@ -37,7 +37,7 @@ public class EmailRegisterController {
 
 
     @PostMapping("/register/email")
-    @ApiOperation(value = "email register")
+    @ApiOperation(value = "邮箱注册")
     public MemberVO registerByEmail(String nickname,String email,String password,String captcha,String uuid) {
 
         boolean isPass = captchaClient.valid(uuid, captcha, SceneType.REGISTER.name());

@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * jwt token Authentication management
+ * jwt鉴权管理
  * <p>
  * Created by kingapex on 2018/3/12.
  *
@@ -40,7 +40,7 @@ public class SellerAuthenticationService  extends AbstractAuthenticationService 
     protected final Log logger = LogFactory.getLog(this.getClass());
 
     /**
-     * willtokenResolve toClerk
+     *将token解析为Clerk
      *
      * @param token
      * @return

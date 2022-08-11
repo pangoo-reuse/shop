@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Merchandise classification controller
+ * 商品分类控制器
  *
  * @author fk
  * @version v2.0
@@ -43,7 +43,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/goods/categories")
-@Api(description = "Commodity classification correlationAPI")
+@Api(tags = "商品分类相关API")
 public class CategoryBuyerController {
 
     @Autowired
@@ -52,16 +52,16 @@ public class CategoryBuyerController {
     @Autowired
     private BrandManager brandManager;
 
-    @ApiOperation(value = "Home page and other commodity classification data")
+    @ApiOperation(value = "首页等商品分类数据")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "parent_id", value = "CategoriesidAnd the top of0", required = true, dataType = "int", paramType = "path"),})
+            @ApiImplicitParam(name = "parent_id", value = "分类id，顶级为0", required = true, dataType = "int", paramType = "path"),})
     @GetMapping(value = "/{parent_id}/children")
     public List<CategoryVO> list(@PathVariable("parent_id") Integer parentId) {
 
         List<CategoryVO> catTree = categoryManager.listAllChildren(parentId);
 
         for (CategoryVO cat : catTree) {
-            // The first level category shows the associated brand
+            // 一级分类显示关联的品牌
             if (cat.getParentId().compareTo(parentId) == 0) {
 
                 List<BrandDO> brandList = brandManager.getBrandsByCategory(cat.getCategoryId());

@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * withdrawalapi
+ * 提现api
  *
  * @author Chopper
  * @version v1.0
@@ -47,7 +47,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/distribution/withdraw")
-@Api(description = "withdrawalapi")
+@Api(tags = "提现api")
 public class WithdrawBuyerController {
 
     protected final Log logger = LogFactory.getLog(this.getClass());
@@ -56,7 +56,7 @@ public class WithdrawBuyerController {
     @Autowired
     private DistributionManager distributionManager;
 
-    @ApiOperation("Save withdrawal parameters")
+    @ApiOperation("保存提现参数")
     @PutMapping(value = "/params")
     public BankParamsVO saveWithdrawWay(BankParamsVO bankParamsVO) {
 
@@ -68,13 +68,13 @@ public class WithdrawBuyerController {
             withdrawManager.saveWithdrawWay(bankParamsVO);
             return bankParamsVO;
         } catch (Exception e) {
-            logger.error("Save failed", e);
+            logger.error("保存失败", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }
 
 
-    @ApiOperation("Get withdrawal parameters")
+    @ApiOperation("获取提现参数")
     @GetMapping(value = "/params")
     public BankParamsVO getWithdrawWay() {
         Buyer buyer = UserContext.getBuyer();
@@ -84,16 +84,16 @@ public class WithdrawBuyerController {
         try {
             return withdrawManager.getWithdrawSetting(buyer.getUid());
         } catch (Exception e) {
-            logger.error("For failure", e);
+            logger.error("获取失败", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }
 
-    @ApiOperation("Withdrawal application")
+    @ApiOperation("提现申请")
     @PostMapping(value = "/apply-withdraw")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "apply_money", value = "To apply for the amount", required = true, paramType = "query", dataType = "double"),
-            @ApiImplicitParam(name = "remark", value = "note", required = false, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "apply_money", value = "申请金额", required = true, paramType = "query", dataType = "double"),
+            @ApiImplicitParam(name = "remark", value = "备注", required = false, paramType = "query", dataType = "String"),
 
     })
     public SuccessMessage applyWithdraw(@ApiIgnore Double applyMoney, @ApiIgnore String remark) {
@@ -107,16 +107,16 @@ public class WithdrawBuyerController {
         try {
             double rebate = distributionManager.getCanRebate(buyer.getUid());
 
-            // If withdrawal application
+            // 如果提现申请
             if (applyMoney <= 0) {
                 throw new DistributionException(DistributionErrorCode.E1006.code(), DistributionErrorCode.E1006.des());
             }
             /**
-             * If the application amount is less than the current withdrawal amount
+             * 如果申请金额小于当前可提现金额
              */
             if (applyMoney <= rebate) {
                 this.withdrawManager.applyWithdraw(buyer.getUid(), applyMoney, remark);
-                return new SuccessMessage("Application submitted");
+                return new SuccessMessage("Apply submitted");
 
             } else {
                 throw new DistributionException(DistributionErrorCode.E1003.code(), DistributionErrorCode.E1003.des());
@@ -124,7 +124,7 @@ public class WithdrawBuyerController {
         } catch (DistributionException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("Withdrawal application error：", e);
+            logger.error("提现申请错误：", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
 

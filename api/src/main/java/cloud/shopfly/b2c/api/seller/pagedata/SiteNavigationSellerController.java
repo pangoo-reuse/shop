@@ -31,7 +31,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 
 /**
- * Navigation bar controller
+ * 导航栏控制器
  *
  * @author fk
  * @version v1.0
@@ -40,7 +40,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/seller/pages/site-navigations")
-@Api(description = "Navigation bar correlationAPI")
+@Api(tags = "导航栏相关API")
 @Validated
 public class SiteNavigationSellerController {
 
@@ -48,11 +48,11 @@ public class SiteNavigationSellerController {
     private SiteNavigationManager siteNavigationManager;
 
 
-    @ApiOperation(value = "Query the navigation bar list", response = SiteNavigation.class)
+    @ApiOperation(value = "查询导航栏列表", response = SiteNavigation.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page_no", value = "The page number", required = true, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "page_size", value = "Display quantity per page", required = true, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "client_type", value = "Client type", required = true, dataType = "string", paramType = "query", allowableValues = "PC,MOBILE"),
+            @ApiImplicitParam(name = "page_no", value = "页码", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "page_size", value = "每页显示数量", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "client_type", value = "客户端类型", required = true, dataType = "string", paramType = "query", allowableValues = "PC,MOBILE"),
     })
     @GetMapping
     public Page list(@ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize, @ApiIgnore String clientType) {
@@ -61,7 +61,7 @@ public class SiteNavigationSellerController {
     }
 
 
-    @ApiOperation(value = "Add navigation", response = SiteNavigation.class)
+    @ApiOperation(value = "添加导航栏", response = SiteNavigation.class)
     @PostMapping
     public SiteNavigation add(@Valid SiteNavigation siteNavigation) {
 
@@ -71,7 +71,7 @@ public class SiteNavigationSellerController {
     }
 
     @PutMapping(value = "/{id}")
-    @ApiOperation(value = "Modify navigation bar", response = SiteNavigation.class)
+    @ApiOperation(value = "修改导航栏", response = SiteNavigation.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "A primary key", required = true, dataType = "int", paramType = "path")
     })
@@ -84,7 +84,7 @@ public class SiteNavigationSellerController {
 
 
     @DeleteMapping(value = "/{id}")
-    @ApiOperation(value = "Delete navigation bar")
+    @ApiOperation(value = "删除导航栏")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "The primary key of the navigation bar to delete", required = true, dataType = "int", paramType = "path")
     })
@@ -97,7 +97,7 @@ public class SiteNavigationSellerController {
 
 
     @GetMapping(value = "/{id}")
-    @ApiOperation(value = "Query a navigation bar")
+    @ApiOperation(value = "查询一个导航栏")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "Primary key of the navigation bar to be queried", required = true, dataType = "int", paramType = "path")
     })
@@ -109,10 +109,10 @@ public class SiteNavigationSellerController {
     }
 
     @PutMapping("/{id}/{sort}")
-    @ApiOperation(value = "Move the navigation bar menu up and down")
+    @ApiOperation(value = "上下移动导航栏菜单")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "Navigation keys", required = true, dataType = "int", paramType = "path"),
-            @ApiImplicitParam(name = "sort", value = " upup Move down,down", required = true, dataType = "string", paramType = "path")
+            @ApiImplicitParam(name = "id", value = "导航主键", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "sort", value = "上移 up ，下移down", required = true, dataType = "string", paramType = "path")
     })
     public SiteNavigation updateSort(@PathVariable(name = "id") Integer id, @PathVariable @SortType String sort) {
 

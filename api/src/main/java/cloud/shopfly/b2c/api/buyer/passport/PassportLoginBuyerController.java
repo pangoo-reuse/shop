@@ -37,7 +37,7 @@ import javax.validation.constraints.NotEmpty;
 
 
 /**
- * Member login and registrationAPI
+ * 会员登录注册API
  *
  * @author zh
  * @version v7.0
@@ -46,7 +46,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @RestController
 @RequestMapping("/passport")
-@Api(description = "Member loginAPI")
+@Api(tags = "会员登录API")
 @Validated
 public class PassportLoginBuyerController {
 
@@ -62,13 +62,13 @@ public class PassportLoginBuyerController {
     private ShopflyConfig shopflyConfig;
 
     @PostMapping(value = "/login/smscode/{mobile}")
-    @ApiOperation(value = "Send verification code")
+    @ApiOperation(value = "发送验证码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuid", value = "uuidUnique identifier of the client", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "captcha", value = "Image verification code", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "mobile", value = "Mobile phone number", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "uuid", value = "uuid客户端的唯一标识", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "captcha", value = "图片验证码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "mobile", value = "手机号码", required = true, dataType = "String", paramType = "path"),
     })
-    public String sendSmsCode(@NotEmpty(message = "uuidCant be empty") String uuid, @NotEmpty(message = "图片验证码Cant be empty") String captcha, @PathVariable("mobile") String mobile) {
+    public String sendSmsCode(@NotEmpty(message = "uuid cant be empty") String uuid, @NotEmpty(message = "img captcha cant be empty") String captcha, @PathVariable("mobile") String mobile) {
         boolean isPass = captchaClient.valid(uuid, captcha, SceneType.LOGIN.name());
         if (!isPass) {
             throw new ServiceException(MemberErrorCode.E107.code(), "The image verification code is incorrect！");
@@ -80,12 +80,12 @@ public class PassportLoginBuyerController {
     }
 
     @GetMapping("/login")
-    @ApiOperation(value = "Username（Mobile phone no.）/Password to loginAPI")
+    @ApiOperation(value = "用户名（手机号）/密码登录API")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "Username", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "password", value = "Password", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "captcha", value = "captcha", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "uuid", value = "Unique identifier of the client", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "captcha", value = "验证码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "uuid", value = "客户端唯一标识", required = true, dataType = "String", paramType = "query"),
     })
     public MemberVO login(@NotEmpty(message = "The user name cannot be empty") String username, @NotEmpty(message = "The password cannot be empty") String password, @NotEmpty(message = "The image verification code cannot be empty") String captcha, @NotEmpty(message = "uuidCant be empty") String uuid) {
         // Verify that the image verification code is correct
@@ -99,11 +99,11 @@ public class PassportLoginBuyerController {
 
 
     @GetMapping("/login/{mobile}")
-    @ApiOperation(value = "Login by Mobile NumberAPI")
+    @ApiOperation(value = "手机号码登录API")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", value = "Mobile phone no.", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "sms_code", value = "Mobile verification code", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "uuid", value = "Unique identifier of the client", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "mobile", value = "手机号", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "sms_code", value = "手机验证码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "uuid", value = "客户端唯一标识", required = true, dataType = "String", paramType = "query")
     })
     public MemberVO mobileLogin(@PathVariable String mobile, @ApiIgnore @NotEmpty(message = "The SMS verification code cannot be empty") String smsCode) {
         boolean isPass = smsClient.valid(SceneType.LOGIN.name(), mobile, smsCode);
@@ -114,11 +114,11 @@ public class PassportLoginBuyerController {
     }
 
     @GetMapping("/app/login/{mobile}")
-    @ApiOperation(value = "APPLogin by Mobile NumberAPI")
+    @ApiOperation(value = "APP手机号码登录API")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "mobile", value = "Mobile phone no.", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "sms_code", value = "Mobile verification code", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "uuid", value = "Unique identifier of the client", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "mobile", value = "手机号", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "sms_code", value = "手机验证码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "uuid", value = "客户端唯一标识", required = true, dataType = "String", paramType = "query")
     })
     public MemberVO appMobileLogin(@PathVariable String mobile, @ApiIgnore @NotEmpty(message = "The SMS verification code cannot be empty") String smsCode) {
         boolean isPass = smsClient.valid(SceneType.LOGIN.name(), mobile, smsCode);

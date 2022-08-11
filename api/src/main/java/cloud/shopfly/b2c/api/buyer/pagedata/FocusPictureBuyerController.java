@@ -28,7 +28,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 /**
- * Focus graph controller
+ * 焦点图控制器
  *
  * @author fk
  * @version v1.0
@@ -37,16 +37,16 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/focus-pictures")
-@Api(description = "Focal graph correlationAPI")
+@Api(tags = "焦点图相关API")
 public class FocusPictureBuyerController {
 
     @Autowired
     private FocusPictureManager focusPictureManager;
 
 
-    @ApiOperation(value = "Query the list of focus graphs", response = FocusPicture.class)
+    @ApiOperation(value = "查询焦点图列表", response = FocusPicture.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "client_type", value = "Client type", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "client_type", value = "客户端类型", dataType = "string", paramType = "query"),
     })
     @GetMapping
     public List list(@ApiIgnore String clientType) {

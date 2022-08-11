@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * Member Management Addressapi
+ * 会员管理地址api
  *
  * @author zh
  * @version v2.0
@@ -39,18 +39,18 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @RestController
 @RequestMapping("/seller/members")
-@Api(description = "Member address correlationAPI")
+@Api(tags = "会员地址相关API")
 public class MemberAddressSellerController {
 
     @Autowired
     private MemberAddressManager memberAddressManager;
 
-    @ApiOperation(value = "Query the address list of a specified member", response = MemberAddress.class)
+    @ApiOperation(value = "查询指定会员的地址列表", response = MemberAddress.class)
     @GetMapping(value = "/addresses/{member_id}")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page_no", value = "The page number", required = true, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "page_size", value = "Display quantity per page", required = true, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "member_id", value = "membersid", required = true, dataType = "int", paramType = "path")
+            @ApiImplicitParam(name = "page_no", value = "页码", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "page_size", value = "每页显示数量", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "member_id", value = "会员id", required = true, dataType = "int", paramType = "path")
     })
     public Page list(@ApiIgnore @PathVariable("member_id") Integer memberId, @ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize) {
         return this.memberAddressManager.list(pageNo, pageSize, memberId);

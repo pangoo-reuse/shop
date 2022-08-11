@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * baiduUeditorConfiguration and file upload support
+ * 百度Ueditor配置及文件上传支持
  * @author kingapex
  * @version 1.0
  * @since 7.0.0
@@ -46,18 +46,18 @@ public class UeditorBaseController {
 
 
     /**
-     * File upload interface
+     * 文件上传接口
      */
     @Autowired
     private FileManager fileManager;
 
     /**
-     * The configuration content constant is used to cache configuration information so that it is not read by the hard disk every time
+     * 配置内容常量，用于缓存配置信息，避免每次由硬盘读取
      */
     private static String config;
 
     @GetMapping(value = "/",produces = "application/javascript")
-    @ApiOperation(value = "To obtainueditorconfiguration")
+    @ApiOperation(value = "获取ueditor配置n")
     @ApiImplicitParam(name = "callback", value = "jsonpthecallback", required = true, dataType = "String")
     public String config(String callback) throws JSONException {
 
@@ -66,9 +66,9 @@ public class UeditorBaseController {
     }
 
     /**
-     * Access to the configuration<br>
-     * ifconfigOtherwise, the disk will read it<br>
-     * Read the file as/resource/ueditor_config.json<br><br>
+     * 获取配置<br>
+     * 如果config中已经存在，则直接返回，否则由硬盘读取<br>
+     * 读取文件为/resource/ueditor_config.json<br><br>
      * @return
      */
     private String getConfig() {
@@ -81,16 +81,16 @@ public class UeditorBaseController {
     }
 
     /**
-     * File upload<br>
-     * acceptPOSTrequest<br>
-     * You can upload multiple files and screenshots
-     * @param upfile File stream
+     * 文件上传<br>
+     * 接受POST请求<br>
+     * 同时支持多择文件上传和截图上传
+     * @param upfile 文件流
      * @return
      * @throws JSONException
      * @throws IOException
      */
     @PostMapping(value = "/")
-    @ApiOperation(value = "ueditorfile/Image upload")
+    @ApiOperation(value = "ueditor文件/图片上传")
     public Map upload( MultipartFile upfile) throws JSONException, IOException {
         Map result = new HashMap(16);
         if (upfile != null && upfile.getOriginalFilename() != null) {
@@ -102,7 +102,7 @@ public class UeditorBaseController {
 
             if(!FileUtil.isAllowUpImg(ext)){
 
-                result.put("state","File format not allowed to upload, please uploadgif,jpg,png,jpeg,mp4Format file.");
+                result.put("state","File format not allowed to upload, please upload gif,jpg,png,jpeg,mp4Format file.");
                 return  result;
 
             }

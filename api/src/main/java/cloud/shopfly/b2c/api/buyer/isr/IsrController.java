@@ -20,7 +20,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/isr")
-@Api(description = "ISR API")
+@Api(tags = "ISR API")
 public class IsrController {
 
     @Autowired
@@ -29,14 +29,14 @@ public class IsrController {
     @Autowired
     private ArticleManager articleManager;
 
-    @ApiOperation(value = "products id ")
+    @ApiOperation(value = "商品ID ")
     @GetMapping(value = "/products")
     public List<Integer> products() {
 
         return goodsQueryManager.getAllGoodsId();
     }
 
-    @ApiOperation(value = "articles id ")
+    @ApiOperation(value = "文章ID ")
     @GetMapping(value = "/articles")
     public List<Integer> articles() {
 

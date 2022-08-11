@@ -36,13 +36,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * Settlement parameter controller
+ * 结算参数控制器
  *
  * @author Snow create in 2018/4/8
  * @version v2.0
  * @since v7.0.0
  */
-@Api(description = "Clearing parameters Interface module")
+@Api(tags = "结算参数接口模块")
 @RestController
 @RequestMapping("/trade/checkout-params")
 @Validated
@@ -52,12 +52,12 @@ public class CheckoutParamBuyerController {
     private CheckoutParamManager checkoutParamManager;
 
 
-    @ApiOperation(value = "Set the shipping addressid")
+    @ApiOperation(value = "设置收货地址id")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "address_id", value = "Shipping addressid", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "address_id", value = "收货地址id", required = true, dataType = "int", paramType = "path"),
     })
     @PostMapping(value = "/address-id/{address_id}")
-    public void setAddressId(@NotNull(message = "A receiving address must be specifiedid") @PathVariable(value = "address_id") Integer addressId) {
+    public void setAddressId(@NotNull(message = "A receiving address must be specified id") @PathVariable(value = "address_id") Integer addressId) {
 
         // Read settlement parameters
         CheckoutParamVO checkoutParamVO = this.checkoutParamManager.getParam();
@@ -67,9 +67,9 @@ public class CheckoutParamBuyerController {
     }
 
 
-    @ApiOperation(value = "Setting the payment Type")
+    @ApiOperation(value = "设置支付类型")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "payment_type", value = "Payment type Online payment：ONLINECash on delivery：COD", required = true, dataType = "String", paramType = "query", allowableValues = "ONLINE,COD")
+            @ApiImplicitParam(name = "payment_type", value = "支付类型 在线支付：ONLINE，货到付款：COD", required = true, dataType = "String", paramType = "query", allowableValues = "ONLINE,COD")
     })
     @PostMapping(value = "/payment-type")
     public void setPaymentType(@ApiIgnore @NotNull(message = "The payment type must be specified") String paymentType) {
@@ -77,14 +77,14 @@ public class CheckoutParamBuyerController {
 
         PaymentTypeEnum paymentTypeEnum = PaymentTypeEnum.valueOf(paymentType.toUpperCase());
 
-        // Check whether cash on delivery is supported
+        //检测是否支持货到付款
         this.checkoutParamManager.checkCod(paymentTypeEnum);
 
         this.checkoutParamManager.setPaymentType(paymentTypeEnum);
 
     }
 
-    @ApiOperation(value = "Setting invoice Information")
+    @ApiOperation(value = "设置发票信息")
     @PostMapping(value = "/receipt")
     public void setReceipt(@Valid ReceiptVO receiptVO) {
         if (StringUtil.isEmpty(receiptVO.getReceiptTitle())) {
@@ -93,7 +93,7 @@ public class CheckoutParamBuyerController {
         if (StringUtil.isEmpty(receiptVO.getReceiptContent())) {
             throw new ServiceException(SystemErrorCodeV1.INVALID_REQUEST_PARAMETER, "The invoice content is mandatory");
         }
-        // If the invoice is not personal, it needs to check the invoice tax number
+        //如果发票不为个人的时候 需要校验发票税号
         if (!receiptVO.getType().equals(0) && StringUtil.isEmpty(receiptVO.getTaxNo())) {
             throw new ServiceException(SystemErrorCodeV1.INVALID_REQUEST_PARAMETER, "Tax invoice number must be filled in");
         }
@@ -101,16 +101,16 @@ public class CheckoutParamBuyerController {
         this.checkoutParamManager.setReceipt(receiptVO);
     }
 
-    @ApiOperation(value = "Cancel the invoice")
+    @ApiOperation(value = "取消发票")
     @DeleteMapping(value = "/receipt")
     public void delReceipt() {
         checkoutParamManager.deleteReceipt();
     }
 
 
-    @ApiOperation(value = "Set delivery time")
+    @ApiOperation(value = "设置送货时间")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "receive_time", value = "Delivery time", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "receive_time", value = "送货时间", required = true, dataType = "String", paramType = "query"),
     })
     @PostMapping(value = "/receive-time")
     public void setReceiveTime(@ApiIgnore @NotNull(message = "Delivery times must be specified") String receiveTime) {
@@ -120,9 +120,9 @@ public class CheckoutParamBuyerController {
     }
 
 
-    @ApiOperation(value = "Set order remarks")
+    @ApiOperation(value = "设置订单备注")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "remark", value = "The order note", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "remark", value = "订单备注", required = true, dataType = "String", paramType = "query"),
     })
     @PostMapping(value = "/remark")
     public void setRemark(String remark) {
@@ -131,7 +131,7 @@ public class CheckoutParamBuyerController {
     }
 
 
-    @ApiOperation(value = "Get settlement parameters", response = CheckoutParamVO.class)
+    @ApiOperation(value = "获取结算参数", response = CheckoutParamVO.class)
     @ResponseBody
     @GetMapping()
     public CheckoutParamVO get() {

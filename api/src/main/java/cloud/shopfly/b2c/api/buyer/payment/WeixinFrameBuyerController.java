@@ -31,16 +31,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 微信PC端支付，在frame中显示二维码的页面<br>
+ * 架构详见:http://doc.javamall.com.cn/current/achitecture/jia-gou/ding-dan/ding-dan-zhi-fu-jia-gou.html
  * WeChatPCEnd pay, inframeThe page showing the QR code<br>
  * Architecture as shown in the:http://doc.javamall.com.cn/current/achitecture/jia-gou/ding-dan/ding-dan-zhi-fu-jia-gou.html
- * Created by kingapex on 2018/7/20.
  *
  * @author kingapex
  * @version 1.0
  * @since 7.0.0
  * 2018/7/20
  */
-@Api(description = "Order paymentAPI")
+@Api(tags = "订单支付API")
 @Controller
 @RequestMapping("/order/pay")
 @Validated
@@ -50,13 +51,13 @@ public class WeixinFrameBuyerController {
     private DomainHelper domainHelper;
 
     @ApiIgnore
-    @ApiOperation(value = "Wechat TWO-DIMENSIONAL code display page")
+    @ApiOperation(value = "微信二维码显示页")
     @PostMapping("/weixin/qrpage/{weixin_trade_sn}/{pr}")
     public String qrPage(Model model, @PathVariable(name = "weixin_trade_sn") String weixinTradeSn, @PathVariable(name = "pr") String pr, HttpServletResponse response, HttpServletRequest request) {
 
         String buyerDomain = domainHelper.getBuyerDomain();
 
-        // Obtaining a Virtual Directory
+        //获取虚拟目录
         String cxt = request.getContextPath();
         if ("/".equals(cxt)) {
             cxt = "";
@@ -69,7 +70,7 @@ public class WeixinFrameBuyerController {
 
         model.addAttribute("jquery_path", domainHelper.getCallback() + "/jquery.min.js");
         model.addAttribute("default_gateway_url", domainHelper.getCallback());
-        // The QR code mode is embedded in the iframe, which should be set to be nested by the frame of the buyer domain name accordingly
+        //二维码模式嵌在的iframe中的，要设置此相应允许被buyer域名的frame嵌套
         response.setHeader("Content-Security-Policy", "frame-ancestors " + buyerDomain);
         return "weixin_qr";
     }

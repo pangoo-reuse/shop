@@ -32,8 +32,7 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * Created by kingapex on 2018/3/12.
- * Seller security Configuration
+ * 卖家安全配置
  *
  * @author kingapex
  * @version 1.0
@@ -58,7 +57,7 @@ public class SellerSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /**
-     * definesellerProject permissions
+     * 定义seller工程的权限
      *
      * @param http
      * @throws Exception
@@ -82,7 +81,7 @@ public class SellerSecurityConfig extends WebSecurityConfigurerAdapter {
                         return fsi;
                     }
                 }).and().addFilterBefore(new TokenAuthenticationFilter(sellerAuthenticationService), UsernamePasswordAuthenticationFilter.class);
-        // Disable caching
+        // 禁用缓存
         http.headers().cacheControl();
 
 

@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Distribution of goods
+ * 分销商品
  *
  * @author liushuai
  * @version v1.0
@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/seller/distribution")
-@Api(description = "Distribution of goodsAPI")
+@Api(tags = "分销商品API")
 public class DistributionGoodsSellerController {
 
 
@@ -51,9 +51,9 @@ public class DistributionGoodsSellerController {
     @Autowired
     private SettingClient settingClient;
 
-    @ApiOperation(value = "Distribution of goods rebate to obtain")
+    @ApiOperation(value = "分销商品返利获取")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "goods_id", value = "productid", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "goods_id", value = "商品id", required = true, dataType = "int", paramType = "path"),
     })
     @GetMapping(value = "/goods/{goods_id}")
     public DistributionGoods querySetting(@PathVariable("goods_id") Integer goodsId) {
@@ -61,14 +61,14 @@ public class DistributionGoodsSellerController {
     }
 
 
-    @ApiOperation(value = "Distribution of goods rebate setup")
+    @ApiOperation(value = "分销商品返利设置")
     @PutMapping(value = "/goods")
     public DistributionGoods settingGoods(DistributionGoods distributionGoods) {
         return distributionGoodsClient.edit(distributionGoods);
     }
 
 
-    @ApiOperation(value = "Get distribution Settings:1open/0close")
+    @ApiOperation(value = "获取分销设置:1开启/0关闭")
     @GetMapping(value = "/setting")
     public SuccessMessage setting() {
         DistributionSetting ds = JsonUtil.jsonToObject(settingClient.get(SettingGroup.DISTRIBUTION), DistributionSetting.class);

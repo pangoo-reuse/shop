@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 /**
- * Contact Settingsapi
+ * 联系方式设置api
  *
  * @author zh
  * @version v7.0
@@ -40,7 +40,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/seller/settings")
-@Api(description = "Contact Settings")
+@Api(tags = "联系方式设置")
 @Validated
 public class InfoSettingSellerController {
     @Autowired
@@ -48,7 +48,7 @@ public class InfoSettingSellerController {
 
 
     @GetMapping(value = "/info")
-    @ApiOperation(value = "Gets contact Settings", response = InformationSetting.class)
+    @ApiOperation(value = "获取联系方式设置", response = InformationSetting.class)
     public InformationSetting getInfoSetting() {
         String infoSettingJson = settingManager.get(SettingGroup.INFO);
 
@@ -60,7 +60,7 @@ public class InfoSettingSellerController {
     }
 
     @PutMapping(value = "/info")
-    @ApiOperation(value = "Modify contact mode Settings", response = InformationSetting.class)
+    @ApiOperation(value = "修改联系方式设置", response = InformationSetting.class)
     public InformationSetting editSiteSetting(@Valid InformationSetting infoSetting) {
         settingManager.save(SettingGroup.INFO, infoSetting);
         return infoSetting;

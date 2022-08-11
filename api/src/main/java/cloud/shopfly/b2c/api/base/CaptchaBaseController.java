@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * Captcha generation
+ * 验证码生成
  *
  * @author zh
  * @version v7.0
@@ -37,21 +37,21 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/captchas")
-@Api(description = "captchaapi")
+@Api(tags = "验证码api")
 public class CaptchaBaseController {
 
     @Autowired
     private CaptchaManager captchaManager;
 
     @GetMapping(value = "/{uuid}/{scene}")
-    @ApiOperation(value = "Generate captcha")
+    @ApiOperation(value = "生成验证码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuid", value = "uuidUnique identifier of the client", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "scene", value = "Business types", required = true, dataType = "String", paramType = "path")
+            @ApiImplicitParam(name = "uuid", value = "uuid客户端的唯一标识", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "scene", value = "业务类型", required = true, dataType = "String", paramType = "path")
     })
     public String getCode(@PathVariable("uuid") String uuid, @PathVariable("scene") String scene) {
 
-        // Call the business class directly and stream the output from the business class to the browser
+        // 直接调取业务类，由业务类输出流到浏览器
         this.captchaManager.writeCode(uuid, scene);
 
         return null;

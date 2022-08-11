@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * statistical
+ * 统计
  *
  * @author Chopper
  * @version v1.0
@@ -41,20 +41,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/seller/distribution/statistic")
-@Api(description = "statistical")
+@Api(tags = "统计")
 public class DistributionStatisticSellerController {
     protected final Log logger = LogFactory.getLog(this.getClass());
 
     @Autowired
     private DistributionStatisticManager distributionStatisticManager;
 
-    @ApiOperation("Order amount statistics")
+    @ApiOperation("订单金额统计")
     @GetMapping("/order")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "circle", value = "Search types：YEAR/MONTH", paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "member_id", value = "membersid", paramType = "query", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "year", value = "year", paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "month", value = "in", paramType = "query", dataType = "int")
+            @ApiImplicitParam(name = "circle", value = "搜索类型：YEAR/MONTH", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "member_id", value = "会员id", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "year", value = "年份", paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "month", value = "月份", paramType = "query", dataType = "int")
     })
     public SimpleChart order(String circle, Integer memberId, Integer year, Integer month) {
         try {
@@ -65,18 +65,18 @@ public class DistributionStatisticSellerController {
         } catch (DistributionException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("Abnormal statistical amount：", e);
+            logger.error("统计金额异常：", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }
 
-    @ApiOperation("Order quantity statistics")
+    @ApiOperation("订单数量统计")
     @GetMapping("/count")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "circle", value = "Search types：YEAR/MONTH", paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "member_id", value = "membersid", paramType = "query", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "year", value = "year", paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "month", value = "in", paramType = "query", dataType = "int")
+            @ApiImplicitParam(name = "circle", value = "搜索类型：YEAR/MONTH", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "member_id", value = "会员id", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "year", value = "年份", paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "month", value = "月份", paramType = "query", dataType = "int")
     })
     public SimpleChart count(String circle, Integer memberId, Integer year, Integer month) {
         try {
@@ -87,18 +87,18 @@ public class DistributionStatisticSellerController {
         } catch (DistributionException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("Abnormal statistical amount：", e);
+            logger.error("统计金额异常：", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }
 
-    @ApiOperation("Order cashback statistics")
+    @ApiOperation("订单返现统计")
     @GetMapping("/push")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "circle", value = "Search types：YEAR/MONTH", paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "member_id", value = "membersid", paramType = "query", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "year", value = "year", paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "month", value = "in", paramType = "query", dataType = "int")
+            @ApiImplicitParam(name = "circle", value = "搜索类型：YEAR/MONTH", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "member_id", value = "会员id", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "year", value = "年份", paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "month", value = "月份", paramType = "query", dataType = "int")
     })
     public SimpleChart push(String circle, Integer memberId, Integer year, Integer month) {
         try {
@@ -109,7 +109,7 @@ public class DistributionStatisticSellerController {
         } catch (DistributionException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("Abnormal statistical amount：", e);
+            logger.error("统计金额异常：", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }

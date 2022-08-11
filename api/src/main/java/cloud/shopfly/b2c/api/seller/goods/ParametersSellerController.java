@@ -30,7 +30,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 
 /**
- * Parameter controller
+ * 参数控制器
  * 
  * @author fk
  * @version v2.0
@@ -38,14 +38,14 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/seller/goods/parameters")
-@Api(description = "Parameters related toAPI")
+@Api(tags = "参数相关API")
 @Validated
 public class ParametersSellerController {
 
 	@Autowired
 	private ParametersManager parametersManager;
 
-	@ApiOperation(value = "Add parameters", response = ParametersDO.class)
+	@ApiOperation(value = "添加参数", response = ParametersDO.class)
 	@PostMapping
 	public ParametersDO add(@Valid ParametersDO parameters) {
 
@@ -55,7 +55,7 @@ public class ParametersSellerController {
 	}
 
 	@PutMapping(value = "/{id}")
-	@ApiOperation(value = "Modify the parameters", response = ParametersDO.class)
+	@ApiOperation(value = "修改参数", response = ParametersDO.class)
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "A primary key", required = true, dataType = "int", paramType = "path") })
 	public ParametersDO edit(@Valid ParametersDO parameters, @PathVariable Integer id) {
@@ -66,7 +66,7 @@ public class ParametersSellerController {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	@ApiOperation(value = "Delete the parameter")
+	@ApiOperation(value = "删除参数")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "Primary key of the parameter to be deleted", required = true, dataType = "int", paramType = "path") })
 	public String delete(@PathVariable Integer id) {
@@ -77,7 +77,7 @@ public class ParametersSellerController {
 	}
 
 	@GetMapping(value = "/{id}")
-	@ApiOperation(value = "Query a parameter")
+	@ApiOperation(value = "查询一个参数")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "Primary key of the parameter to be queried", required = true, dataType = "int", paramType = "path") })
 	public ParametersDO get(@PathVariable Integer id) {
@@ -87,9 +87,9 @@ public class ParametersSellerController {
 		return parameters;
 	}
 
-	@ApiOperation(value = "Parameters move up or down", notes = "This parameter is used when you move parameter groups up or down when binding parameters by category")
+	@ApiOperation(value = "参数上移或者下移", notes = "分类绑定参数时，上移下移参数组时使用")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "sort_type", value = "Sort type, move upupMove down,down", required = true, paramType = "query", dataType = "String"),
+			@ApiImplicitParam(name = "sort_type", value = "排序类型，上移 up，下移down", required = true, paramType = "query", dataType = "String"),
 			@ApiImplicitParam(name = "param_id", value = "Parameter the primary key", required = true, paramType = "path", dataType = "String"), })
 	@PutMapping(value = "/{param_id}/sort")
 	public String paramSort(@PathVariable("param_id") Integer paramId, @ApiIgnore @SortType String sortType) {

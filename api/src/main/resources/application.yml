@@ -14,9 +14,9 @@ spring:
 
   #数据库配置
   datasource:
-    url: jdbc:mysql://222.222.106.122:52513/b2c_en?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    url: jdbc:mysql://127.0.0.1:3306/b2c_en?useUnicode=true&characterEncoding=utf8&autoReconnect=true
     username: root
-    password: enation752513
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
     druid:
       web-stat-filter:

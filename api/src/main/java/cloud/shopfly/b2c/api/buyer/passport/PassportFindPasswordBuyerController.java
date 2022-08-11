@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Member Password Recoveryapi
+ * 会员找回密码api
  *
  * @author zh
  * @version v7.0
@@ -53,7 +53,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/passport")
-@Api(description = "Member Password Recoveryapi")
+@Api(tags = "会员找回密码API")
 @Validated
 public class PassportFindPasswordBuyerController {
 
@@ -73,17 +73,17 @@ public class PassportFindPasswordBuyerController {
     private ShopflyConfig shopflyConfig;
 
 
-    @ApiOperation(value = "Get account information")
+    @ApiOperation(value = "获取账户信息")
     @GetMapping("find-pwd")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuid", value = "uuidUnique identifier of the client",
+            @ApiImplicitParam(name = "uuid", value = "uuid客户端的唯一标识",
                     required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "captcha", value = "Image verification code",
+            @ApiImplicitParam(name = "captcha", value = "图片验证码",
                     required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "account", value = "The name of the account",
+            @ApiImplicitParam(name = "account", value = "账户名称",
                     required = true, dataType = "String", paramType = "query"),
     })
-    public String getMemberInfo(@NotEmpty(message = "uuidCant be empty") String uuid,
+    public String getMemberInfo(@NotEmpty(message = "uuid cant be empty") String uuid,
                                 @NotEmpty(message = "The image verification code cannot be empty") String captcha,
                                 @NotEmpty(message = "The account name cannot be empty") String account) {
         boolean isPass = captchaClient.valid(uuid, captcha, SceneType.FIND_PASSWORD.name());
@@ -112,14 +112,14 @@ public class PassportFindPasswordBuyerController {
     }
 
     @PostMapping(value = "/find-pwd/send")
-    @ApiOperation(value = "Send verification code")
+    @ApiOperation(value = "发送验证码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuid", value = "uuidUnique identifier of the client",
+            @ApiImplicitParam(name = "uuid", value = "uuid客户端的唯一标识",
                     required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "captcha", value = "Image verification code",
+            @ApiImplicitParam(name = "captcha", value = "图片验证码",
                     required = true, dataType = "String", paramType = "query")
     })
-    public String sendSmsCode(@NotEmpty(message = "uuidCant be empty") String uuid,
+    public String sendSmsCode(@NotEmpty(message = "uuid cant be empty") String uuid,
                               @NotEmpty(message = "The image verification code cannot be empty") String captcha) {
         boolean isPass = captchaClient.valid(uuid, captcha, SceneType.FIND_PASSWORD.name());
         if (!isPass) {
@@ -135,14 +135,14 @@ public class PassportFindPasswordBuyerController {
 
 
     @PutMapping(value = "/find-pwd/update-password")
-    @ApiOperation(value = "Change the password")
+    @ApiOperation(value = "修改密码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuid", value = "uuidUnique identifier of the client",
+            @ApiImplicitParam(name = "uuid", value = "uuid客户端的唯一标识",
                     required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "password", value = "Password",
+            @ApiImplicitParam(name = "password", value = "密码",
                     required = true, dataType = "String", paramType = "query")
     })
-    public String updatePassword(@NotEmpty(message = "uuidCant be empty") String uuid, String password) {
+    public String updatePassword(@NotEmpty(message = "uuid cant be empty") String uuid, String password) {
         Object o = cache.get(CachePrefix.SMS_VERIFY.getPrefix() + uuid);
         if (o != null) {
             Member member = (Member) cache.get(uuid);
@@ -158,15 +158,15 @@ public class PassportFindPasswordBuyerController {
 
 
     @GetMapping(value = "/find-pwd/valid")
-    @ApiOperation(value = "Authentication Retrieve password Verification code")
+    @ApiOperation(value = "验证找回密码验证码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuid", value = "uuidUnique identifier of the client",
+            @ApiImplicitParam(name = "uuid", value = "uuid客户端的唯一标识",
                     required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "sms_code", value = "captcha",
+            @ApiImplicitParam(name = "sms_code", value = "验证码",
                     required = true, dataType = "String", paramType = "query")
     })
     public String updateCodeCheck(@Valid @ApiIgnore @NotEmpty(message = "The verification code cannot be empty") String smsCode,
-                                  @NotEmpty(message = "uuidCant be empty") String uuid) {
+                                  @NotEmpty(message = "uuid cant be empty") String uuid) {
         Member member = (Member) cache.get(uuid);
         if (member == null) {
             throw new ServiceException(MemberErrorCode.E119.code(), "Verify the identity of the current user");

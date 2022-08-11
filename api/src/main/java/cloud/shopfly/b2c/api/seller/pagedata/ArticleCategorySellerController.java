@@ -31,7 +31,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * Article classification controller
+ * 文章分类控制器
  *
  * @author fk
  * @version v1.0
@@ -40,18 +40,18 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seller/pages/article-categories")
-@Api(description = "Article classification correlationAPI")
+@Api(tags = "文章分类相关API")
 public class ArticleCategorySellerController {
 
     @Autowired
     private ArticleCategoryManager articleCategoryManager;
 
 
-    @ApiOperation(value = "Query the list of first-level articles", response = ArticleCategory.class)
+    @ApiOperation(value = "查询文章一级分类列表", response = ArticleCategory.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page_no", value = "The page number", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "page_size", value = "Display quantity per page", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "name", value = "name", dataType = "string", paramType = "query")
+            @ApiImplicitParam(name = "page_no", value = "页码", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "page_size", value = "每页显示数量", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "name", value = "分类名称", dataType = "string", paramType = "query")
     })
     @GetMapping
     public Page list(@ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize, String name) {
@@ -59,9 +59,9 @@ public class ArticleCategorySellerController {
         return this.articleCategoryManager.list(pageNo, pageSize, name);
     }
 
-    @ApiOperation(value = "Query the list of secondary categories of articles", response = ArticleCategory.class)
+    @ApiOperation(value = "查询文章二级分类列表", response = ArticleCategory.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "Level 1 Article classificationid", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "id", value = "一级文章分类id", required = true, dataType = "int", paramType = "path"),
     })
     @GetMapping("/{id}/children")
     public List<ArticleCategory> list(@PathVariable Integer id) {
@@ -70,7 +70,7 @@ public class ArticleCategorySellerController {
     }
 
 
-    @ApiOperation(value = "Add article categories", response = ArticleCategory.class)
+    @ApiOperation(value = "添加文章分类", response = ArticleCategory.class)
     @PostMapping
     public ArticleCategory add(@Valid ArticleCategory articleCategory) {
 
@@ -80,7 +80,7 @@ public class ArticleCategorySellerController {
     }
 
     @PutMapping(value = "/{id}")
-    @ApiOperation(value = "Modify article categories", response = ArticleCategory.class)
+    @ApiOperation(value = "修改文章分类", response = ArticleCategory.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "A primary key", required = true, dataType = "int", paramType = "path")
     })
@@ -93,7 +93,7 @@ public class ArticleCategorySellerController {
 
 
     @DeleteMapping(value = "/{id}")
-    @ApiOperation(value = "Delete article categories")
+    @ApiOperation(value = "删除文章分类")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "The primary key of the article category to be deleted", required = true, dataType = "int", paramType = "path")
     })
@@ -106,7 +106,7 @@ public class ArticleCategorySellerController {
 
 
     @GetMapping(value = "/{id}")
-    @ApiOperation(value = "Query an article category")
+    @ApiOperation(value = "查询一个文章分类")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "Primary key of the article category to be queried", required = true, dataType = "int", paramType = "path")
     })
@@ -118,7 +118,7 @@ public class ArticleCategorySellerController {
     }
 
 
-    @ApiOperation(value = "Query the article category tree", response = ArticleCategory.class)
+    @ApiOperation(value = "查询文章分类树", response = ArticleCategory.class)
     @GetMapping("/childrens")
     public List<ArticleCategoryVO> getMenuTree() {
         return this.articleCategoryManager.getCategoryTree();

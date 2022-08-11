@@ -30,14 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
- * Wechat signature controller
+ * 微信签名控制器
  *
  * @author Chopper
  * @version v1.0
  * @since v7.0
  * 2019-02-20 In the afternoon4:33
  */
-@Api(description = "Wechat signature tool")
+@Api(tags = "微信签名工具")
 @RestController
 @RequestMapping("/wechat")
 @Validated
@@ -46,10 +46,10 @@ public class WeChatSignatureController {
     @Autowired
     private WeixinSignaturer weixinSignaturer;
 
-    @ApiOperation(value = "Applets signature")
+    @ApiOperation(value = "小程序签名")
     @ResponseBody
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", value = "WAP/REACT/NATIVE/MINI Respectively,WAP/nativeapp/h5app/Small program"),
+            @ApiImplicitParam(name = "type", value = "WAP/REACT/NATIVE/MINI 分别为 WAP/原生app/h5app/小程序"),
 
     })
     @GetMapping

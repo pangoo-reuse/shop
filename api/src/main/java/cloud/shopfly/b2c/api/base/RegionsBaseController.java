@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * regionapi
+ * 地区api
  *
  * @author zh
  * @version v7.0
@@ -40,7 +40,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/regions")
-@Api(description = "regionAPI")
+@Api(tags = "地区API")
 public class RegionsBaseController {
 
     @Autowired
@@ -48,9 +48,9 @@ public class RegionsBaseController {
 
 
     @GetMapping(value = "/{id}/children")
-    @ApiOperation(value = "Gets the children of a region")
+    @ApiOperation(value = "获取某地区的子地区")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "regionid", required = true, dataType = "int", paramType = "path")
+            @ApiImplicitParam(name = "id", value = "地区id", required = true, dataType = "int", paramType = "path")
     })
     public List<Regions> getChildrenById(@PathVariable Integer id) {
 
@@ -59,7 +59,7 @@ public class RegionsBaseController {
 
 
     @GetMapping(value = "/depth/{depth}")
-    @ApiOperation(value = "Regions that organize the region data structure according to the region deep query")
+    @ApiOperation(value = "根据地区深度查询组织好地区数据结构的地区")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "depth", value = "The depth of the", required = true, dataType = "int", paramType = "path")
     })

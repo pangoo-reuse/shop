@@ -33,7 +33,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
- * Template controller
+ * 模版控制器
  *
  * @author Chopper
  * @version v1.0
@@ -43,7 +43,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/seller/distribution/commission-tpl")
-@Api(description = "template")
+@Api(tags = "模版")
 public class CommissionTplSellerController {
     protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -51,7 +51,7 @@ public class CommissionTplSellerController {
     @Resource
     private CommissionTplManager commissionTplManager;
 
-    @ApiOperation("Add the template")
+    @ApiOperation("添加模版")
     @PostMapping
     public CommissionTpl save(@Valid CommissionTpl commissionTpl) {
         try {
@@ -59,17 +59,17 @@ public class CommissionTplSellerController {
         } catch (DistributionException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("Add template exception：", e);
+            logger.error("添加模版异常：", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }
 
-    @ApiOperation("Modify the template")
+    @ApiOperation("修改模版")
     @PutMapping(value = "/{tplId}")
-    @ApiImplicitParam(name = "tplId", value = "templateid", required = false, paramType = "path", dataType = "int", allowMultiple = false)
+    @ApiImplicitParam(name = "tplId", value = "模版id", required = false, paramType = "path", dataType = "int", allowMultiple = false)
     public CommissionTpl saveEdit(@PathVariable @ApiIgnore Integer tplId, @Valid CommissionTpl commissionTpl) {
 
-        // Prompt if you want to change the default in the default template to not default
+        //如果要将默认模版中默认修改为不默认则提示
         if (commissionTpl.getIsDefault() == 0) {
             CommissionTpl com = this.commissionTplManager.getModel(tplId);
             if (com.getIsDefault() == 1) {
@@ -82,35 +82,35 @@ public class CommissionTplSellerController {
         } catch (DistributionException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("Failed to modify the template. Procedure", e);
+            logger.error("修改模版失败：", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
 
     }
 
 
-    @ApiOperation("The template list")
+    @ApiOperation("模板列表")
     @GetMapping
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page_size", value = "Page size", required = false, paramType = "query", dataType = "int", allowMultiple = false),
-            @ApiImplicitParam(name = "page_no", value = "The page number", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "page_size", value = "页码大小", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "page_no", value = "页码", required = false, paramType = "query", dataType = "int", allowMultiple = false),
     })
     public Page<CommissionTpl> listJson(@ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize) {
         return this.commissionTplManager.page(pageNo, pageSize);
     }
 
 
-    @ApiOperation("Access to the template")
+    @ApiOperation("获取模板")
     @GetMapping(value = "/{tplId}")
-    @ApiImplicitParam(name = "tplId", value = "templateid", required = false, paramType = "path", dataType = "int", allowMultiple = false)
+    @ApiImplicitParam(name = "tplId", value = "模版id", required = false, paramType = "path", dataType = "int", allowMultiple = false)
     public CommissionTpl getModel(@PathVariable Integer tplId) {
         return this.commissionTplManager.getModel(tplId);
     }
 
 
-    @ApiOperation("To delete a template")
+    @ApiOperation("删除模板")
     @DeleteMapping(value = "/{tplId}")
-    @ApiImplicitParam(name = "tplId", value = "templateid", required = false, paramType = "path", dataType = "int", allowMultiple = false)
+    @ApiImplicitParam(name = "tplId", value = "模版id", required = false, paramType = "path", dataType = "int", allowMultiple = false)
     public void delete(@PathVariable Integer tplId) {
         try {
             this.commissionTplManager.delete(tplId);
@@ -118,7 +118,7 @@ public class CommissionTplSellerController {
         } catch (DistributionException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("Failed to delete the template. Procedure", e);
+            logger.error("删除模版失败：", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
 

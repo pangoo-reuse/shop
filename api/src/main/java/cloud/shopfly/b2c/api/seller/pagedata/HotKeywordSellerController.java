@@ -29,7 +29,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 
 /**
- * Hot keyword controller
+ * 热门关键字控制器
  * @author fk
  * @version v1.0
  * @since v7.0.0
@@ -37,17 +37,17 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/seller/pages/hot-keywords")
-@Api(description = "Popular keywords are relevantAPI")
+@Api(tags = "热门关键字相关API")
 public class HotKeywordSellerController {
 	
 	@Autowired
 	private HotKeywordManager hotKeywordManager;
 				
 
-	@ApiOperation(value	= "Example Query the list of popular keywords", response = HotKeyword.class)
+	@ApiOperation(value	= "查询热门关键字列表", response = HotKeyword.class)
 	@ApiImplicitParams({
-		 @ApiImplicitParam(name	= "page_no",	value =	"The page number",	required = true, dataType = "int",	paramType =	"query"),
-		 @ApiImplicitParam(name	= "page_size",	value =	"Display quantity per page",	required = true, dataType = "int",	paramType =	"query")
+		 @ApiImplicitParam(name	= "page_no",	value =	"页码",	required = true, dataType = "int",	paramType =	"query"),
+		 @ApiImplicitParam(name	= "page_size",	value =	"每页显示数量",	required = true, dataType = "int",	paramType =	"query")
 	})
 	@GetMapping
 	public Page list(@ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize)	{
@@ -56,7 +56,7 @@ public class HotKeywordSellerController {
 	}
 	
 	
-	@ApiOperation(value	= "Add hot keywords", response = HotKeyword.class)
+	@ApiOperation(value	= "添加热门关键字", response = HotKeyword.class)
 	@PostMapping
 	public HotKeyword add(@Valid HotKeyword hotKeyword)	{
 		
@@ -66,7 +66,7 @@ public class HotKeywordSellerController {
 	}
 				
 	@PutMapping(value = "/{id}")
-	@ApiOperation(value	= "Modify hot keywords", response = HotKeyword.class)
+	@ApiOperation(value	= "修改热门关键字", response = HotKeyword.class)
 	@ApiImplicitParams({
 		 @ApiImplicitParam(name	= "id",	value =	"A primary key",	required = true, dataType = "int",	paramType =	"path")
 	})
@@ -79,7 +79,7 @@ public class HotKeywordSellerController {
 			
 	
 	@DeleteMapping(value = "/{id}")
-	@ApiOperation(value	= "Remove hot keywords")
+	@ApiOperation(value	= "删除热门关键字")
 	@ApiImplicitParams({
 		 @ApiImplicitParam(name	= "id",	value =	"The primary key of the hot keyword to delete",	required = true, dataType = "int",	paramType =	"path")
 	})
@@ -92,7 +92,7 @@ public class HotKeywordSellerController {
 				
 	
 	@GetMapping(value =	"/{id}")
-	@ApiOperation(value	= "Query a popular keyword")
+	@ApiOperation(value	= "查询一个热门关键字")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "id",	value = "The primary key of the hot keyword to query",	required = true, dataType = "int",	paramType = "path")	
 	})

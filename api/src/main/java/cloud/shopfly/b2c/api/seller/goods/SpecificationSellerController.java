@@ -32,7 +32,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * Specification controller
+ * Specification 规格项控制器
  *
  * @author fk
  * @version v2.0
@@ -40,32 +40,32 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seller/goods")
-@Api(description = "Specification correlationAPI")
+@Api(tags = "规格(Specification)项相关API  ")
 @Validated
 public class SpecificationSellerController {
 
     @Autowired
     private SpecificationManager specificationManager;
 
-    @ApiOperation(value = "According to the classificationidQuerying specifications includes specification values", notes = "According to the classificationidThe query specification")
-    @ApiImplicitParam(name = "category_id", value = "Categoriesid", required = true, paramType = "path", dataType = "int")
+    @ApiOperation(value = "根据分类id查询规格包括规格值", notes = "根据分类id查询规格")
+    @ApiImplicitParam(name = "category_id", value = "分类id", required = true, paramType = "path", dataType = "int")
     @GetMapping("/categories/{category_id}/specs")
     public List<SpecificationVO> sellerQuerySpec(@PathVariable("category_id") Integer categoryId) {
 
         return this.specificationManager.querySpec(categoryId);
     }
 
-    @ApiOperation(value = "Example Query the specification list", response = SpecificationDO.class)
+    @ApiOperation(value = "查询规格项列表", response = SpecificationDO.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page_no", value = "The page number", required = true, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "page_size", value = "Display quantity per page", required = true, dataType = "int", paramType = "query") })
+            @ApiImplicitParam(name = "page_no", value = "页码", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "page_size", value = "每页显示数量", required = true, dataType = "int", paramType = "query") })
     @GetMapping("/specs")
     public Page list(@ApiIgnore  Integer pageNo, @ApiIgnore Integer pageSize) {
 
         return this.specificationManager.list(pageNo, pageSize);
     }
 
-    @ApiOperation(value = "Add specification item", response = SpecificationDO.class)
+    @ApiOperation(value = "添加规格项", response = SpecificationDO.class)
     @PostMapping("/specs")
     public SpecificationDO add(@Valid SpecificationDO specification) {
 
@@ -75,7 +75,7 @@ public class SpecificationSellerController {
     }
 
     @PutMapping(value = "/specs/{id}")
-    @ApiOperation(value = "Modifying Specifications", response = SpecificationDO.class)
+    @ApiOperation(value = "修改规格项", response = SpecificationDO.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "A primary key", required = true, dataType = "int", paramType = "path") })
     public SpecificationDO edit(@Valid SpecificationDO specification, @PathVariable Integer id) {
@@ -86,7 +86,7 @@ public class SpecificationSellerController {
     }
 
     @DeleteMapping(value = "/specs/{ids}")
-    @ApiOperation(value = "Deleting specifications")
+    @ApiOperation(value = "删除规格项")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ids", value = "Primary key of the specification to be deleted", required = true, dataType = "int", paramType = "path",allowMultiple=true) })
     public String delete(@PathVariable Integer[] ids) {
@@ -97,7 +97,7 @@ public class SpecificationSellerController {
     }
 
     @GetMapping(value = "/specs/{id}")
-    @ApiOperation(value = "Example Query a specification")
+    @ApiOperation(value = "查询一个规格项")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "Primary key of the specification to be queried", required = true, dataType = "int", paramType = "path") })
     public SpecificationDO get(@PathVariable Integer id) {

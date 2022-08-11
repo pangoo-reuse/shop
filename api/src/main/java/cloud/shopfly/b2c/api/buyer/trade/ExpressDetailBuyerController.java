@@ -29,14 +29,14 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * Logistics query interface
+ * 物流查询接口
  *
  * @author zh
  * @version v7.0
  * @date 18/7/12 In the morning10:30
  * @since v7.0
  */
-@Api(description = "Logistics query interface")
+@Api(tags = "物流查询接口")
 @RestController
 @RequestMapping("/express")
 @Validated
@@ -45,10 +45,10 @@ public class ExpressDetailBuyerController {
     @Autowired
     private ExpressPlatformManager expressPlatformManager;
 
-    @ApiOperation(value = "Query logistics details")
+    @ApiOperation(value = "查询物流详细")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "Logistics companyid", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "num", value = "Courier number", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "id", value = "物流公司id", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "num", value = "快递单号", dataType = "String", paramType = "query"),
     })
     @GetMapping
     public ExpressDetailVO list(@ApiIgnore Integer id, @ApiIgnore String num) {

@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * Distribution order
+ * 分销订单订单
  *
  * @author Chopper
  * @version v1.0
@@ -42,7 +42,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @since v7.0
  * 2018/5/28 In the morning11:12
  */
-@Api(description = "Distribution of orders")
+@Api(tags = "分销订单")
 @RestController
 @RequestMapping("/seller/distribution/order")
 public class DistributionOrderSellerController {
@@ -51,13 +51,13 @@ public class DistributionOrderSellerController {
 
     protected final Log logger = LogFactory.getLog(this.getClass());
 
-    @ApiOperation("Settlement distribution order query")
+    @ApiOperation("结算单 分销订单查询")
     @GetMapping()
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "bill_id", value = "Member statementid", required = false, paramType = "query", dataType = "int", allowMultiple = false),
-            @ApiImplicitParam(name = "member_id", value = "membersid", required = false, paramType = "query", dataType = "int", allowMultiple = false),
-            @ApiImplicitParam(name = "page_size", value = "Page size", required = false, paramType = "query", dataType = "int", allowMultiple = false),
-            @ApiImplicitParam(name = "page_no", value = "The page number", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "bill_id", value = "会员结算单id", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "member_id", value = "会员id", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "page_size", value = "页码大小", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "page_no", value = "页码", required = false, paramType = "query", dataType = "int", allowMultiple = false),
     })
     public Page<DistributionOrderVO> billOrder(@ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize, @ApiIgnore Integer billId, @ApiIgnore Integer memberId) throws Exception {
         try {
@@ -65,19 +65,19 @@ public class DistributionOrderSellerController {
         } catch (DistributionException e) {
             throw e;
         } catch (Exception e) {
-            this.logger.error("Query statements-》Abnormal orders", e);
+            this.logger.error("查询结算单-》订单异常 ", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }
 
 
-    @ApiOperation("Settlement distribution refund order enquiry")
+    @ApiOperation("结算单 分销退款订单查询")
     @GetMapping("/sellback")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "bill_id", value = "statementsid", required = false, paramType = "query", dataType = "int", allowMultiple = false),
-            @ApiImplicitParam(name = "member_id", value = "membersid", required = false, paramType = "query", dataType = "int", allowMultiple = false),
-            @ApiImplicitParam(name = "page_size", value = "Page size", required = false, paramType = "query", dataType = "int", allowMultiple = false),
-            @ApiImplicitParam(name = "page_no", value = "The page number", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "bill_id", value = "结算单id", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "member_id", value = "会员id", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "page_size", value = "页码大小", required = false, paramType = "query", dataType = "int", allowMultiple = false),
+            @ApiImplicitParam(name = "page_no", value = "页码", required = false, paramType = "query", dataType = "int", allowMultiple = false),
     })
     public Page<DistributionSellbackOrderVO> billSellbackOrder(@ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize, @ApiIgnore Integer billId, @ApiIgnore Integer memberId) {
         try {
@@ -85,7 +85,7 @@ public class DistributionOrderSellerController {
         } catch (DistributionException e) {
             throw e;
         } catch (Exception e) {
-            this.logger.error("Query statements-》Abnormal refund form", e);
+            this.logger.error("查询结算单-》退款单异常 ", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
         }
     }

@@ -1,0 +1,8 @@
+1.安装 rabbitmq  rabbitmq_delayed_message_exchange ，配置虚拟机
+2.安装 redis 并配置
+3.安装 elasticsearch 并配置
+4.安装 mysql8.0.28 并配置
+5.修改 api 下面的 application.yml
+6.打包
+7.部署 jar
+8.部署 dashboard，vue-storefront

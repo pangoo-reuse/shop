@@ -16,6 +16,7 @@
 package cloud.shopfly.b2c.api.config.security.seller;
 
 import cloud.shopfly.b2c.framework.context.AdminUserContext;
+import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -30,8 +31,8 @@ import java.util.Iterator;
 import java.util.regex.Pattern;
 
 /**
- * Management side access decision control<br/>
- * Check whether the permission is approved based on the permission provided by the permission data source
+ * 管理端访问决策控制<br/>
+ * 根据权限数据源提供的权限来判断是否可以通过
  *
  * @author kingapex
  * @version 1.0
@@ -40,7 +41,7 @@ import java.util.regex.Pattern;
  * @since 7.0.0
  * 2018/3/27
  */
-public class SellerAccessDecisionManager implements org.springframework.security.access.AccessDecisionManager {
+public class SellerAccessDecisionManager implements AccessDecisionManager {
     @Override
     public void decide(Authentication authentication, Object object,
                        Collection<ConfigAttribute> configAttributes)
@@ -48,7 +49,7 @@ public class SellerAccessDecisionManager implements org.springframework.security
 
         FilterInvocation filterInvocation = (FilterInvocation) object;
         String url = filterInvocation.getRequestUrl();
-        // Filter Swagger series
+        //过滤swagger系列
         AntPathMatcher matcher = new AntPathMatcher();
         Boolean result = matcher.match("/swagger-ui.html", url);
         result = result || matcher.match("/v2/api-docs**", url);
@@ -59,7 +60,7 @@ public class SellerAccessDecisionManager implements org.springframework.security
         if (result) {
             return;
         }
-        // Filter background administrator login
+        //过滤后台管理员登录
         result = matcher.match("/seller/login**", url);
         result = result || matcher.match("/seller/systems/admin-users/token**", url);
         result = result || matcher.match("/seller/members/logout**", url);
@@ -85,27 +86,27 @@ public class SellerAccessDecisionManager implements org.springframework.security
                     return;
                 }
                 if (ga.getAuthority().equals(needRole)) {
-                    // If a role is matched, the system allows the user to pass
+                    //匹配到有对应角色,则允许通过
                     return;
                 }
             }
         }
-        // The URL has configuration permission. However, if the login user does not match the corresponding permission, the access is prohibited
+        //该url有配置权限,但是当然登录用户没有匹配到对应权限,则禁止访问
         throw new AccessDeniedException("not allow");
     }
 
     /**
-     * General permission control after login
+     * 登录之后通用权限控制
      *
      * @param url apiThe path
      * @return
      */
     private boolean adminRolesChecked(String url) {
-        // An exact match
+        //精确匹配
         if ("/seller/index/page".equals(url)) {
             return true;
         }
-        // Regular match
+        //正则匹配
         boolean isMatch = Pattern.matches("/seller/systems/roles/[1-9].*", url);
         isMatch = isMatch || Pattern.matches("/regions/[1-9].*", url);
         isMatch = isMatch || Pattern.matches("/uploaders.*", url);

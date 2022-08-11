@@ -36,7 +36,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 /**
- * Integral commodity correlationAPI
+ * 积分商品相关API
  *
  * @author Snow create in 2018/7/23
  * @version v2.0
@@ -44,7 +44,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/promotions/exchange")
-@Api(description = "Integral commodity correlationAPI")
+@Api(tags = "积分商品相关API")
 @Validated
 public class ExchangeBuyerController {
 
@@ -54,7 +54,7 @@ public class ExchangeBuyerController {
     @Autowired
     private ExchangeGoodsManager exchangeGoodsManager;
 
-    @ApiOperation(value = "Query integral classification collection")
+    @ApiOperation(value = "查询积分分类集合")
     @GetMapping("/cats")
     public List<ExchangeCat> getCat(){
         List<ExchangeCat> catList = this.exchangeCatManager.list(0);
@@ -62,11 +62,11 @@ public class ExchangeBuyerController {
     }
 
 
-    @ApiOperation(value = "Query integral goods")
+    @ApiOperation(value = "查询积分商品")
     @ApiImplicitParams({
-            @ApiImplicitParam(name	= "cat_id", value = "Integral classificationid",dataType = "int",paramType =	"query"),
-            @ApiImplicitParam(name	= "page_no", value = "The page number", dataType = "int",	paramType =	"query"),
-            @ApiImplicitParam(name	= "page_size", value = "A number of", dataType = "int",	paramType =	"query")
+            @ApiImplicitParam(name	= "cat_id", value = "积分分类id",dataType = "int",paramType =	"query"),
+            @ApiImplicitParam(name	= "page_no", value = "页码", dataType = "int",	paramType =	"query"),
+            @ApiImplicitParam(name	= "page_size", value = "条数", dataType = "int",	paramType =	"query")
     })
     @GetMapping("/goods")
     public Page<ExchangeDO> list(@ApiIgnore Integer catId, @ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize) {

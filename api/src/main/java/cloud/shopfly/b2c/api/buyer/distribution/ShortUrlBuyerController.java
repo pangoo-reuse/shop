@@ -38,7 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Short link recognition
+ * 短链接识别
  *
  * @author Chopper
  * @version v1.0
@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
  */
 @RestController
 @RequestMapping("/distribution/su")
-@Api(description = "Short linkapi")
+@Api(tags = "短链接api")
 public class ShortUrlBuyerController {
 
 
@@ -60,13 +60,13 @@ public class ShortUrlBuyerController {
     protected final Log logger = LogFactory.getLog(this.getClass());
 
     /**
-     * Access the short link to take the membershipidjoinsession, and jump to the page
+     * 访问短链接 把会员id加入session中，并跳转页面
      *
      * @return
      */
     @GetMapping(value = "/visit")
-    @ApiOperation("Access the short link to take the membershipidjoinsession, and jump to the page")
-    @ApiImplicitParam(name = "su", value = "Short link", required = true, paramType = "query", dataType = "String")
+    @ApiOperation("访问短链接 把会员id加入session中，并跳转页面")
+    @ApiImplicitParam(name = "su", value = "短链接", required = true, paramType = "query", dataType = "String")
     public SuccessMessage visit(String su, @RequestHeader(required = false) String uuid) throws Exception {
         try {
             ShortUrlDO shortUrlDO = shortUrlManager.getLongUrl(su);
@@ -78,7 +78,7 @@ public class ShortUrlBuyerController {
             }
             return new SuccessMessage(shortUrlDO.getUrl());
         } catch (Exception e) {
-            logger.error("Short connection validation error", e);
+            logger.error("短连接验证出错", e);
             throw new DistributionException(DistributionErrorCode.E1000.code(), DistributionErrorCode.E1000.des());
 
         }

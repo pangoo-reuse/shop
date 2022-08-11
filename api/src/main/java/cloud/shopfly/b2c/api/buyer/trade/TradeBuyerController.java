@@ -28,13 +28,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Transaction controller
+ * 交易控制器
  *
  * @author Snow create in 2018/5/8
  * @version v2.0
  * @since v7.0.0
  */
-@Api(description = "Transaction interface module")
+@Api(tags = "交易控制器")
 @RestController
 @RequestMapping("/trade")
 @Validated
@@ -45,9 +45,9 @@ public class TradeBuyerController {
     private TradeManager tradeManager;
 
 
-    @ApiOperation(value = "Create a trading")
+    @ApiOperation(value = "创建交易")
     @PostMapping(value = "/create")
-    @ApiImplicitParam(name = "client", value = "Client type", required = false, dataType = "String", paramType = "query", allowableValues = "PC,WAP,NATIVE,REACT")
+    @ApiImplicitParam(name = "client", value = "客户端类型", required = false, dataType = "String", paramType = "query", allowableValues = "PC,WAP,NATIVE,REACT")
     public TradeVO create(String client) {
         return this.tradeManager.createTrade(client);
     }

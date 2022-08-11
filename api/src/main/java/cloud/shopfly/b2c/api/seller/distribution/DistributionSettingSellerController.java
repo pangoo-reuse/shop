@@ -34,7 +34,7 @@ import javax.validation.Valid;
 
 
 /**
- * Distribution set
+ * 分销设置
  * @author Chopper
  * @version v1.0
  * @since v7.0
@@ -44,14 +44,14 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/seller/distribution")
-@Api(description = "Distribution set")
+@Api(tags = "分销设置")
 @Validated
 public class DistributionSettingSellerController {
     @Autowired
     private SettingManager settingManager;
 
     @GetMapping(value = "/settings")
-    @ApiOperation(value = "Get distribution Settings", response = DistributionSetting.class)
+    @ApiOperation(value = "获取分销设置", response = DistributionSetting.class)
     public DistributionSetting getDistributionSetting() {
         String json = settingManager.get(SettingGroup.DISTRIBUTION);
 
@@ -65,7 +65,7 @@ public class DistributionSettingSellerController {
     }
 
     @PutMapping(value = "/settings")
-    @ApiOperation(value = "Modifying distribution Settings", response = PointSetting.class)
+    @ApiOperation(value = "修改分销设置", response = PointSetting.class)
     public DistributionSetting editDistributionSetting(@Valid DistributionSetting distributionSetting) {
         settingManager.save(SettingGroup.DISTRIBUTION, distributionSetting);
         return distributionSetting;

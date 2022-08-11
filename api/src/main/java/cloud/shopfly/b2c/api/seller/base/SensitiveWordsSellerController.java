@@ -29,7 +29,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 
 /**
- * Sensitive word controller
+ * 敏感词控制器
  * @author fk
  * @version v1.0
  * @since v7.0.0
@@ -37,17 +37,17 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/seller/sensitive-words")
-@Api(description = "Sensitive word correlationAPI")
+@Api(tags = "敏感词相关API")
 public class SensitiveWordsSellerController {
 	
 	@Autowired
 	private	SensitiveWordsManager sensitiveWordsManager;
 				
 
-	@ApiOperation(value	= "Example Query the list of sensitive words", response = SensitiveWords.class)
+	@ApiOperation(value	= "查询敏感词列表", response = SensitiveWords.class)
 	@ApiImplicitParams({
-		 @ApiImplicitParam(name	= "page_no",	value =	"The page number",	required = true, dataType = "int",	paramType =	"query"),
-		 @ApiImplicitParam(name	= "page_size",	value =	"Display quantity per page",	required = true, dataType = "int",	paramType =	"query")
+		 @ApiImplicitParam(name	= "page_no",	value =	"页码",	required = true, dataType = "int",	paramType =	"query"),
+		 @ApiImplicitParam(name	= "page_size",	value =	"每页显示数量",	required = true, dataType = "int",	paramType =	"query")
 	})
 	@GetMapping
 	public Page list(@ApiIgnore Integer pageNo, @ApiIgnore Integer pageSize, String keyword)	{
@@ -56,7 +56,7 @@ public class SensitiveWordsSellerController {
 	}
 	
 	
-	@ApiOperation(value	= "Add sensitive words", response = SensitiveWords.class)
+	@ApiOperation(value	= "添加敏感词", response = SensitiveWords.class)
 	@PostMapping
 	public SensitiveWords add(@Valid SensitiveWords sensitiveWords)	{
 		
@@ -66,9 +66,9 @@ public class SensitiveWordsSellerController {
 	}
 				
 	@PutMapping(value = "/{id}")
-	@ApiOperation(value	= "Modify sensitive words", response = SensitiveWords.class)
+	@ApiOperation(value	= "修改敏感词", response = SensitiveWords.class)
 	@ApiImplicitParams({
-		 @ApiImplicitParam(name	= "id",	value =	"A primary key",	required = true, dataType = "int",	paramType =	"path")
+		 @ApiImplicitParam(name	= "id",	value =	"主键",	required = true, dataType = "int",	paramType =	"path")
 	})
 	public	SensitiveWords edit(@Valid SensitiveWords sensitiveWords, @PathVariable Integer id) {
 		
@@ -79,9 +79,9 @@ public class SensitiveWordsSellerController {
 			
 	
 	@DeleteMapping(value = "/{id}")
-	@ApiOperation(value	= "Delete sensitive words")
+	@ApiOperation(value	= "删除敏感词")
 	@ApiImplicitParams({
-		 @ApiImplicitParam(name	= "id",	value =	"Primary key of sensitive words to delete",	required = true, dataType = "int",	paramType =	"path")
+		 @ApiImplicitParam(name	= "id",	value =	"要删除的敏感词主键",	required = true, dataType = "int",	paramType =	"path")
 	})
 	public	String	delete(@PathVariable Integer id) {
 		
@@ -92,9 +92,9 @@ public class SensitiveWordsSellerController {
 				
 	
 	@GetMapping(value =	"/{id}")
-	@ApiOperation(value	= "Query a sensitive word")
+	@ApiOperation(value	= "查询一个敏感词")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "id",	value = "Primary key of sensitive word to be queried",	required = true, dataType = "int",	paramType = "path")	
+		@ApiImplicitParam(name = "id",	value = "要查询的敏感词主键",	required = true, dataType = "int",	paramType = "path")
 	})
 	public	SensitiveWords get(@PathVariable	Integer	id)	{
 		

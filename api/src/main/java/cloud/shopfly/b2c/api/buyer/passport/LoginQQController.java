@@ -27,14 +27,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * Unified login on wechat
+ * 微信统一登陆
  *
  * @author cs
  * @version v1.0
  * @since v7.2.2
  * 2019-09-22
  */
-@Api(description = "QQUnified login")
+@Api(tags = "QQ统一登陆")
 @RestController
 @RequestMapping("/qq")
 @Validated
@@ -44,20 +44,20 @@ public class LoginQQController {
     private LoginQQManager loginQQManager;
 
 
-    @ApiOperation(value = "To obtainappid")
+    @ApiOperation(value = "获取appid")
     @GetMapping("/wap/getAppid")
     public String getLoginUrl(){
         return  loginQQManager.getAppid();
     }
 
 
-    @ApiOperation(value = "Landing page")
+    @ApiOperation(value = "网页登陆")
     @GetMapping("/wap/login")
     public Map h5Login(String access_token,String uuid){
         return loginQQManager.qqWapLogin(access_token,uuid);
     }
 
-    @ApiOperation(value = "applanding")
+    @ApiOperation(value = "app登陆")
     @PostMapping("/app/login/{uuid}")
     public Map appLogin(@PathVariable String uuid, QQUserDTO qqUserDTO){
         return loginQQManager.qqAppLogin(uuid,qqUserDTO);

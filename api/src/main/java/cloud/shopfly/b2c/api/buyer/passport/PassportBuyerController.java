@@ -40,7 +40,7 @@ import java.util.Map;
 
 
 /**
- * Member verification code processing
+ * 会员验证码处理
  *
  * @author zh
  * @version v7.0
@@ -49,7 +49,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/passport")
-@Api(description = "Other Handling of MembersAPI")
+@Api(tags = "会员其他处理API")
 @Validated
 public class PassportBuyerController {
 
@@ -61,11 +61,11 @@ public class PassportBuyerController {
     private SmsClient smsClient;
 
     @GetMapping(value = "/smscode/{mobile}")
-    @ApiOperation(value = "Verify the mobile phone verification code")
+    @ApiOperation(value = "验证手机验证码")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "scene", value = "Business types", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "sms_code", value = "captcha", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "mobile", value = "Mobile phone number", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "scene", value = "业务类型", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "sms_code", value = "验证码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "mobile", value = "手机号码", required = true, dataType = "String", paramType = "path"),
     })
     public String checkSmsCode(@NotEmpty(message = "Service scenarios cannot be empty") String scene, @PathVariable("mobile") String mobile, @Valid @ApiIgnore @NotEmpty(message = "The verification code cannot be empty") String smsCode) {
         boolean isPass = smsClient.valid(scene, mobile, smsCode);
@@ -77,8 +77,8 @@ public class PassportBuyerController {
     }
 
     @GetMapping("/username/{username}")
-    @ApiOperation(value = "The user name is verified repeatedly")
-    @ApiImplicitParam(name = "username", value = "Username", required = true, dataType = "String", paramType = "path")
+    @ApiOperation(value = "用户名重复校验")
+    @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "path")
     public String checkUserName(@PathVariable("username") String username) {
         Member member = memberManager.getMemberByName(username);
         Map map = new HashMap(16);
@@ -93,8 +93,8 @@ public class PassportBuyerController {
 
 
     @GetMapping("/mobile/{mobile}")
-    @ApiOperation(value = "The mobile phone number is checked repeatedly")
-    @ApiImplicitParam(name = "mobile", value = "Mobile phone no.", required = true, dataType = "String", paramType = "path")
+    @ApiOperation(value = "手机号重复校验")
+    @ApiImplicitParam(name = "mobile", value = "手机号", required = true, dataType = "String", paramType = "path")
     public String checkMobile(@PathVariable("mobile") String mobile) {
         boolean isPass = Validator.isMobile(mobile);
         if (!isPass) {
@@ -111,14 +111,14 @@ public class PassportBuyerController {
     }
 
 
-    @ApiOperation(value = "The refreshtoken")
+    @ApiOperation(value = "刷新token")
     @PostMapping("/token")
-    @ApiImplicitParam(name = "refresh_token", value = "The refreshtoken", required = true, dataType = "String", paramType = "query")
-    public String refreshToken(@ApiIgnore @NotEmpty(message = "The refreshtokenCant be empty") String refreshToken) {
+    @ApiImplicitParam(name = "refresh_token", value = "刷新token", required = true, dataType = "String", paramType = "query")
+    public String refreshToken(@ApiIgnore @NotEmpty(message = "The refresh token cant be empty") String refreshToken) {
         try {
             return passportManager.exchangeToken(refreshToken);
         } catch (ExpiredJwtException e) {
-            throw new ServiceException(MemberErrorCode.E109.code(), "The currenttokenHave failed");
+            throw new ServiceException(MemberErrorCode.E109.code(), "The current token have failed");
         }
     }
 }
