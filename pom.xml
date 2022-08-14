@@ -12,11 +12,11 @@
     <artifactId>parent</artifactId>
     <version>1.0.0</version>
     <modules>
-
         <module>framework</module>
         <module>core</module>
         <module>consumer</module>
         <module>api</module>
+        <module>search</module>
 
     </modules>
     <packaging>pom</packaging>
@@ -51,8 +51,10 @@
                 <version>1.2.2</version>
                 <configuration>
                     <imageName>${docker-registry}${project.artifactId}:${project.version}</imageName>
-                    <baseImage>registry.cn-beijing.aliyuncs.com/javashop-k8s-images/java-alpine:8-cn-unlimited</baseImage>
-                    <entryPoint>["java","-jar", "/opt/${project.build.finalName}.jar" ,"-Dfile.encoding=UTF-8"]</entryPoint>
+                    <baseImage>registry.cn-beijing.aliyuncs.com/javashop-k8s-images/java-alpine:8-cn-unlimited
+                    </baseImage>
+                    <entryPoint>["java","-jar", "/opt/${project.build.finalName}.jar" ,"-Dfile.encoding=UTF-8"]
+                    </entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/opt/</targetPath>

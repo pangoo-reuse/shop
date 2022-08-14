@@ -1,5 +1,8 @@
-1.安装 rabbitmq  rabbitmq_delayed_message_exchange ，配置虚拟机
-2.安装 redis 并配置
+1.安装 rabbitmq(启动 brew services start rabbitmq)
+ 下载对应的rabbitmq_delayed_message_exchange 放到plugins里面，
+ 进入 sbin/rabbitmq-plugins enable rabbitmq_delayed_message_exchange ，
+ 重启
+2.安装 redis 并配置 ，启动 brew services start redis
 3.安装 elasticsearch 并配置
 4.安装 mysql8.0.28 并配置
 5.修改 api 下面的 application.yml

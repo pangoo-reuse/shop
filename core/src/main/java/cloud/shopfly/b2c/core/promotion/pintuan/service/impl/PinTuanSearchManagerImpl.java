@@ -25,23 +25,14 @@ import cloud.shopfly.b2c.core.goods.model.vo.CacheGoods;
 import cloud.shopfly.b2c.core.goods.model.vo.GoodsSkuVO;
 import cloud.shopfly.b2c.core.goodssearch.util.HexUtil;
 import cloud.shopfly.b2c.framework.database.DaoSupport;
-import cloud.shopfly.b2c.framework.elasticsearch.EsConfig;
-import cloud.shopfly.b2c.framework.elasticsearch.EsSettings;
 import cloud.shopfly.b2c.framework.logs.Debugger;
 import cloud.shopfly.b2c.framework.util.DateUtil;
 import cloud.shopfly.b2c.framework.util.StringUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.DeleteQuery;
-import org.springframework.data.elasticsearch.core.query.IndexQuery;
-import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -65,11 +56,6 @@ public class PinTuanSearchManagerImpl implements PinTuanSearchManager {
     
     private DaoSupport tradeDaoSupport;
 
-    @Autowired
-    private ElasticsearchTemplate elasticsearchTemplate;
-
-    @Autowired
-    private EsConfig esConfig;
 
     @Autowired
     private GoodsClient goodsClient;
@@ -77,12 +63,6 @@ public class PinTuanSearchManagerImpl implements PinTuanSearchManager {
     protected final Log logger = LogFactory.getLog(this.getClass());
 
     public PinTuanSearchManagerImpl() {
-    }
-
-    public PinTuanSearchManagerImpl(ElasticsearchTemplate elasticsearchTemplate, EsConfig esConfig) {
-        this.elasticsearchTemplate = elasticsearchTemplate;
-        this.esConfig = esConfig;
-
     }
 
     @SuppressWarnings("Duplicates")

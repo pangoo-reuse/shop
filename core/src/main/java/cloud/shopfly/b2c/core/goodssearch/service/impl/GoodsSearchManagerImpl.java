@@ -29,14 +29,12 @@ import cloud.shopfly.b2c.core.goods.service.CategoryManager;
 import cloud.shopfly.b2c.core.goods.util.CatUrlUtils;
 import cloud.shopfly.b2c.core.goods.util.Separator;
 
-import cloud.shopfly.b2c.core.goodssearch.model.*;
 import cloud.shopfly.b2c.core.goodssearch.service.GoodsSearchManager;
 import cloud.shopfly.b2c.framework.database.DaoSupport;
 import cloud.shopfly.b2c.framework.database.Page;
-import cloud.shopfly.b2c.framework.elasticsearch.EsConfig;
-import cloud.shopfly.b2c.framework.elasticsearch.EsSettings;
 import cloud.shopfly.b2c.framework.exception.ServiceException;
 import cloud.shopfly.b2c.framework.util.StringUtil;
+import cloud.shopfly.b2c.search.SearchServiceImpl;
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -81,7 +79,7 @@ public class GoodsSearchManagerImpl implements GoodsSearchManager {
     protected DaoSupport daoSupport;
 
     @Autowired
-    protected EsConfig esConfig;
+    protected SearchServiceImpl searchService;
 
     @Autowired
     protected ElasticsearchTemplate elasticsearchTemplate;
@@ -220,7 +218,7 @@ public class GoodsSearchManagerImpl implements GoodsSearchManager {
         Integer cat = goodsSearch.getCategory();
         Integer brand = goodsSearch.getBrand();
         String price = goodsSearch.getPrice();
-        SearchRequestBuilder searchRequestBuilder = elasticsearchTemplate.getClient().prepareSearch(esConfig.getIndexName()+"_"+ EsSettings.GOODS_INDEX_NAME);
+        SearchRequestBuilder searchRequestBuilder = elasticsearchTemplate.getClient().prepareSearch(searchService.getIndexName()+"_"+ EsSettings.GOODS_INDEX_NAME);
 
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
